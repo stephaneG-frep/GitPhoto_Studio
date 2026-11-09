@@ -1,0 +1,75 @@
+/// Widget de superposition de chargement
+
+import 'package:flutter/material.dart';
+
+/// Overlay de chargement simple
+class LoadingOverlay extends StatelessWidget {
+  final Color? color;
+  final double size;
+  final String? message;
+
+  const LoadingOverlay({
+    super.key,
+    this.color,
+    this.size = 40,
+    this.message,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: size,
+            height: size,
+            child: CircularProgressIndicator(
+              strokeWidth: 3,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                color ?? Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
+          if (message != null) ...[
+            const SizedBox(height: 16),
+            Text(
+              message!,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// Overlay de chargement avec fond semi-transparent
+class LoadingOverlayWithBackground extends StatelessWidget {
+  final Color? backgroundColor;
+  final Color? indicatorColor;
+  final double size;
+  final String? message;
+
+  const LoadingOverlayWithBackground({
+    super.key,
+    this.backgroundColor,
+    this.indicatorColor,
+    this.size = 40,
+    this.message,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: backgroundColor ?? Colors.black.withOpacity(0.5),
+      child: Center(
+        child: LoadingOverlay(
+          color: indicatorColor,
+          size: size,
+          message: message,
+        ),
+      ),
+    );
+  }
+}

@@ -1,0 +1,237 @@
+/// Provider pour l'analyse IA dans Riverpod
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../models/photo_model.dart';
+import '../models/ai_analysis_result.dart';
+import '../services/ai_analysis_service.dart';
+import '../services/photo_manager_service.dart';
+
+/// Service singleton pour l'analyse IA
+final aiAnalysisService = AIAnalysisService();
+
+/// Provider pour PhotoManagerService
+final photoManagerServiceProvider = Provider<PhotoManagerService>(
+  (ref) => PhotoManagerService(),
+);
+
+/// Provider pour vérifier la disponibilité de l'analyse IA
+final aiAnalysisAvailableProvider = FutureProvider<bool>((ref) async {
+  return await aiAnalysisService.isAvailable();
+});
+
+/// Provider pour l'analyse d'une photo spécifique
+final aiPhotoAnalysisProvider = FutureProvider.family<AIAnalysisResult?, String>(
+  (ref, photoId) async {
+    // Obtenir le service PhotoManager pour récupérer la photo
+    final photoManager = ref.watch(photoManagerServiceProvider);
+    
+    final photo = await photoManager.getPhotoById(photoId);
+    if (photo == null) {
+      return null;
+    }
+    
+    return await aiAnalysisService.analyzePhoto(photo);
+  },
+);
+
+/// Provider pour l'analyse de plusieurs photos
+final aiBatchAnalysisProvider = FutureProvider.family<List<AIAnalysisResult>, List<String>>(
+  (ref, photoIds) async {
+    final photoManager = ref.watch(photoManagerServiceProvider);
+    
+    final results = <AIAnalysisResult>[];
+    
+    for (final photoId in photoIds) {
+      final photo = await photoManager.getPhotoById(photoId);
+      if (photo != null) {
+        final analysis = await aiAnalysisService.analyzePhoto(photo);
+        if (analysis != null) {
+          results.add(analysis);
+        }
+      }
+    }
+    
+    return results;
+  },
+);
+
+/// Provider pour la recherche sémantique
+final aiSemanticSearchProvider = FutureProvider.family<List<Photo>, String>(
+  (ref, query) async {
+    final photoManager = ref.watch(photoManagerServiceProvider);
+    final photos = await photoManager.getAllPhotos();
+    
+    return await aiAnalysisService.semanticSearch(query, photos);
+  },
+);
+
+/// Provider pour la génération de tags
+final aiGenerateTagsProvider = FutureProvider.family<List<String>, String>(
+  (ref, photoId) async {
+    final photoManager = ref.watch(photoManagerServiceProvider);
+    
+    final photo = await photoManager.getPhotoById(photoId);
+    if (photo == null) {
+      return [];
+    }
+    
+    return await aiAnalysisService.generateTags(photo);
+  },
+);
+
+/// Provider pour la génération de légende
+final aiGenerateCaptionProvider = FutureProvider.family<String?, String>(
+  (ref, photoId) async {
+    final photoManager = ref.watch(photoManagerServiceProvider);
+    
+    final photo = await photoManager.getPhotoById(photoId);
+    if (photo == null) {
+      return null;
+    }
+    
+    return await aiAnalysisService.generateCaption(photo);
+  },
+);
+
+/// Provider pour la classification par album
+final aiClassifyByAlbumProvider = FutureProvider<List<MapEntry<String, List<Photo>>>>(
+  (ref) async {
+    final photoManager = ref.watch(photoManagerServiceProvider);
+    final photos = await photoManager.getAllPhotos();
+    
+    final albums = await aiAnalysisService.classifyByAlbum(photos);
+    
+    return albums.entries.toList();
+  },
+);
+
+/// Provider pour l'état de l'analyse IA
+class AIAnalysisState {
+  final bool isAnalyzing;
+  final String? currentPhotoId;
+  final int progress;
+  final int total;
+  final List<AIAnalysisResult> completedResults;
+  final String? error;
+
+  AIAnalysisState({
+    this.isAnalyzing = false,
+    this.currentPhotoId,
+    this.progress = 0,
+    this.total = 0,
+    this.completedResults = const [],
+    this.error,
+  });
+
+  AIAnalysisState copyWith({
+    bool? isAnalyzing,
+    String? currentPhotoId,
+    int? progress,
+    int? total,
+    List<AIAnalysisResult>? completedResults,
+    String? error,
+  }) {
+    return AIAnalysisState(
+      isAnalyzing: isAnalyzing ?? this.isAnalyzing,
+      currentPhotoId: currentPhotoId ?? this.currentPhotoId,
+      progress: progress ?? this.progress,
+      total: total ?? this.total,
+      completedResults: completedResults ?? this.completedResults,
+      error: error,
+    );
+  }
+}
+
+/// Notifier pour gérer l'analyse batch
+class AIAnalysisNotifier extends StateNotifier<AIAnalysisState> {
+  AIAnalysisNotifier() : super(AIAnalysisState());
+
+  Future<void> analyzeAllPhotos() async {
+    final photoManager = await _getPhotoManager();
+    final photos = await photoManager.getAllPhotos();
+    
+    if (photos.isEmpty) {
+      state = state.copyWith(error: 'Aucune photo à analyser');
+      return;
+    }
+
+    state = state.copyWith(
+      isAnalyzing: true,
+      progress: 0,
+      total: photos.length,
+      error: null,
+    );
+
+    try {
+      final results = <AIAnalysisResult>[];
+      
+      for (int i = 0; i < photos.length; i++) {
+        final photo = photos[i];
+        
+        state = state.copyWith(
+          currentPhotoId: photo.id,
+          progress: i + 1,
+        );
+
+        final result = await aiAnalysisService.analyzePhoto(photo);
+        if (result != null) {
+          results.add(result);
+        }
+
+        // Petite pause pour éviter de surcharger l'API
+        await Future.delayed(const Duration(milliseconds: 200));
+      }
+
+      state = state.copyWith(
+        isAnalyzing: false,
+        completedResults: results,
+      );
+    } catch (e) {
+      state = state.copyWith(
+        isAnalyzing: false,
+        error: 'Erreur lors de l\'analyse: $e',
+      );
+    }
+  }
+
+  Future<void> cancelAnalysis() async {
+    // Pour l'instant, on ne peut pas vraiment annuler
+    // Mais on peut réinitialiser l'état
+    state = AIAnalysisState();
+  }
+
+  void clearError() {
+    state = state.copyWith(error: null);
+  }
+
+  Future<void> clearCache() async {
+    aiAnalysisService.clearCache();
+  }
+
+  Future<PhotoManagerService> _getPhotoManager() async {
+    // Cela devra être adapté selon l'implémentation finale
+    return PhotoManagerService();
+  }
+}
+
+/// Provider pour le notifier
+final aiAnalysisNotifierProvider = StateNotifierProvider<AIAnalysisNotifier, AIAnalysisState>(
+  (ref) => AIAnalysisNotifier(),
+
+/// Extension pour utiliser facilement l'analyse IA
+class AIAnalysisExtensions {
+  /// Analyser une photo avec callback de progression
+  static Future<AIAnalysisResult?> analyzeWithProgress(
+    Photo photo,
+    Function(int progress, int total) onProgress,
+  ) async {
+    // Simuler la progression
+    onProgress(1, 10);
+    
+    final result = await aiAnalysisService.analyzePhoto(photo);
+    
+    onProgress(10, 10);
+    
+    return result;
+  }
+}

@@ -1,0 +1,602 @@
+import 'dart:async' show TimeoutException;
+import 'dart:math';
+/// Service d'analyse IA avancée pour GitPhoto Studio
+/// Utilise l'API Mistral pour l'analyse sémantique des photos
+
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart' as path;
+import '../models/photo_model.dart';
+import '../models/ai_analysis_result.dart';
+import 'ai_service.dart';
+
+/// Service pour l'analyse IA avancée des photos
+class AIAnalysisService {
+  static const String _baseUrl = 'https://api.mistral.ai/v1';
+  
+  final AiService _aiService = AiService();
+  
+  // Cache des embeddings pour éviter de refaire des appels API
+  final Map<String, List<double>> _embeddingCache = {};
+  
+  // Cache des résultats d'analyse
+  final Map<String, AIAnalysisResult> _analysisCache = {};
+
+  /// Obtient la clé API Mistral
+  Future<String?> _getApiKey() async {
+    return await _aiService.loadApiKey();
+  }
+
+  /// Analyse une photo et retourne un résultat structuré
+  /// 
+  /// [photo] : La photo à analyser
+  /// [prompts] : Prompts spécifiques pour l'analyse (optionnel)
+  /// 
+  /// Retourne un [AIAnalysisResult] avec :
+  /// - Description détaillée
+  /// - Tags/keywords
+  /// - Catégories
+  /// - Score de qualité
+  /// - Couleurs dominantes
+  Future<AIAnalysisResult?> analyzePhoto(Photo photo, {
+    List<String>? prompts,
+    bool forceRefresh = false,
+  }) async {
+    // Vérifier le cache
+    if (!forceRefresh && _analysisCache.containsKey(photo.id)) {
+      return _analysisCache[photo.id];
+    }
+
+    final apiKey = await _getApiKey();
+    if (apiKey == null || apiKey.isEmpty) {
+      return null;
+    }
+
+    try {
+      final result = await _analyzeWithMistral(photo, apiKey, prompts);
+      if (result != null) {
+        _analysisCache[photo.id] = result;
+      }
+      return result;
+    } catch (e) {
+      print('Erreur lors de l\'analyse IA: $e');
+      return null;
+    }
+  }
+
+  /// Analyse avec l'API Mistral
+  Future<AIAnalysisResult?> _analyzeWithMistral(
+    Photo photo,
+    String apiKey,
+    List<String>? prompts,
+  ) async {
+    final file = File(photo.path);
+    if (!await file.exists()) {
+      return null;
+    }
+
+    // Lire l'image en base64
+    final bytes = await file.readAsBytes();
+    final base64Image = base64Encode(bytes);
+
+    // Construire le prompt d'analyse
+    final analysisPrompt = _buildAnalysisPrompt(photo, prompts);
+
+    // Appeler l'API Mistral
+    final response = await _callMistralAPI(
+      apiKey,
+      [
+        {
+          'role': 'user',
+          'content': [
+            {'type': 'text', 'text': analysisPrompt},
+            {
+              'type': 'image',
+              'image': base64Image,
+            },
+          ],
+        },
+      ],
+    );
+
+    if (response == null) {
+      return null;
+    }
+
+    // Parser la réponse
+    return _parseAnalysisResponse(response, photo);
+  }
+
+  /// Construit le prompt pour l'analyse IA
+  String _buildAnalysisPrompt(Photo photo, List<String>? customPrompts) {
+    final fileName = path.basename(photo.path);
+    final extension = path.extension(fileName).toLowerCase();
+    
+    final basePrompt = '''
+Tu es un expert en analyse d'images et en photographie. 
+Analyse cette image de manière détaillée et structurée.
+
+Retourne UNIQUEMENT un JSON valide avec la structure suivante :
+{
+  "description": "Description détaillée de l'image en 2-3 phrases",
+  "tags": ["tag1", "tag2", ...],
+  "categories": ["catégorie1", "catégorie2", ...],
+  "quality_score": 1-10,
+  "dominant_colors": ["couleur1", "couleur2", ...],
+  "objects_detected": ["objet1", "objet2", ...],
+  "mood": "ambiance de l'image (ex: joyeuse, sombre, calme, ...)",
+  "style": "style de la photo (ex: portrait, paysage, macro, ...)",
+  "technical_notes": {
+    "lighting": "éclairage",
+    "composition": "composition",
+    "focus": "mise au point"
+  }
+}
+
+Ne retourne que le JSON, sans texte supplémentaire.
+''';
+
+    final customPromptPart = customPrompts?.isNotEmpty == true
+        ? '\n\nInstructions supplémentaires : ${customPrompts?.join(', ')}'
+        : '';
+
+    return basePrompt + customPromptPart;
+  }
+
+  /// Parse la réponse de Mistral
+  AIAnalysisResult? _parseAnalysisResponse(String response, Photo photo) {
+    try {
+      // Extraire le contenu JSON de la réponse
+      // Mistral peut retourner : "{"..."}" ou juste {"..."}
+      String jsonContent = response;
+      
+      // Nettoyer la réponse
+      if (jsonContent.startsWith('```') && jsonContent.contains('json')) {
+        final start = jsonContent.indexOf('{');
+        final end = jsonContent.lastIndexOf('}') + 1;
+        jsonContent = jsonContent.substring(start, end);
+      }
+      
+      // Remplacer les sauts de ligne et espaces superflus
+      jsonContent = jsonContent.replaceAll('\n', ' ').replaceAll('\r', ' ');
+      jsonContent = jsonContent.trim();
+
+      final json = jsonDecode(jsonContent);
+      
+      return AIAnalysisResult.fromJson({
+        ...json as Map<String, dynamic>,
+        'photo_id': photo.id,
+        'timestamp': DateTime.now().toIso8601String(),
+      });
+    } catch (e) {
+      print('Erreur de parsing de la réponse IA: $e');
+      print('Réponse brute: $response');
+      
+      // Essayer une analyse de fallback
+      return _createFallbackAnalysis(photo, response);
+    }
+  }
+
+  /// Crée une analyse de fallback si le parsing échoue
+  AIAnalysisResult _createFallbackAnalysis(Photo photo, String rawResponse) {
+    final fileName = path.basenameWithoutExtension(photo.path);
+    
+    return AIAnalysisResult(
+      photoId: photo.id,
+      description: 'Analyse IA partielle - $fileName',
+      tags: [fileName],
+      categories: ['non classifié'],
+      qualityScore: 5,
+      dominantColors: [],
+      objectsDetected: [],
+      mood: 'inconnu',
+      style: 'inconnu',
+      technicalNotes: {
+        'lighting': 'inconnu',
+        'composition': 'inconnu',
+        'focus': 'inconnu',
+      },
+      rawResponse: rawResponse,
+      isFallback: true,
+      timestamp: DateTime.now().toIso8601String(),
+    );
+  }
+
+  /// Appelle l'API Mistral avec un timeout
+  Future<String?> _callMistralAPI(
+    String apiKey, 
+    List<Map<String, dynamic>> messages,
+    {Duration timeout = const Duration(seconds: 60)} 
+  ) async {
+    final url = Uri.parse('$_baseUrl/chat/completions');
+    
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $apiKey',
+    };
+
+    final body = jsonEncode({
+      'model': 'mistral-large-latest',
+      'messages': messages,
+      'temperature': 0.3,
+      'max_tokens': 2000,
+    });
+
+    try {
+      final response = await http
+          .post(url, headers: headers, body: body)
+          .timeout(timeout);
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        final choices = data['choices'] as List?;
+        
+        if (choices != null && choices.isNotEmpty) {
+          final message = choices.first['message'] as Map<String, dynamic>?;
+          return message?['content'] as String?;
+        }
+      } else {
+        print('Erreur API Mistral: ${response.statusCode}');
+        print('Body: ${response.body}');
+      }
+    } on http.ClientException catch (e) {
+      print('Erreur de connexion à Mistral: $e');
+    } on TimeoutException catch (_) {
+      print('Timeout lors de l\'appel à Mistral');
+    } catch (e) {
+      print('Erreur inattendue: $e');
+    }
+
+    return null;
+  }
+
+  /// Génère des tags automatiquement pour une photo
+  Future<List<String>> generateTags(Photo photo) async {
+    final analysis = await analyzePhoto(photo);
+    
+    if (analysis != null) {
+      final tags = <String>[];
+      
+      // Ajouter les tags de l'analyse
+      tags.addAll(analysis.tags);
+      
+      // Ajouter les objets détectés
+      tags.addAll(analysis.objectsDetected);
+      
+      // Ajouter les catégories
+      tags.addAll(analysis.categories);
+      
+      // Ajouter le style
+      if (analysis.style.isNotEmpty) {
+        tags.add(analysis.style);
+      }
+      
+      // Ajouter l'ambiance
+      if (analysis.mood.isNotEmpty) {
+        tags.add(analysis.mood);
+      }
+      
+      // Ajouter la date (si disponible dans les métadonnées)
+      if (photo.dateCreated != null) {
+        final year = photo.dateCreated!.year;
+        final month = photo.dateCreated!.month;
+        tags.add(year.toString());
+        tags.add('${year}-${month.toString().padLeft(2, '0')}');
+      }
+      
+      // Supprimer les doublons
+      return tags.toSet().where((tag) => tag.isNotEmpty).toList();
+    }
+    
+    // Fallback : utiliser le nom du fichier
+    final fileName = path.basenameWithoutExtension(photo.path);
+    return [fileName];
+  }
+
+  /// Recherche sémantique parmi une liste de photos
+  /// Utilise les embeddings pour trouver les photos similaires
+  Future<List<Photo>> semanticSearch(
+    String query,
+    List<Photo> photos, {
+    int limit = 10,
+  }) async {
+    final apiKey = await _getApiKey();
+    if (apiKey == null) {
+      return [];
+    }
+
+    // Obtenir l'embedding de la requête
+    final queryEmbedding = await _getEmbedding(query, apiKey);
+    if (queryEmbedding == null) {
+      return [];
+    }
+
+    // Calculer les similarités
+    final List<MapEntry<Photo, double>> scores = [];
+    
+    for (final photo in photos) {
+      final photoEmbedding = await _getPhotoEmbedding(photo, apiKey);
+      
+      if (photoEmbedding != null) {
+        final similarity = _cosineSimilarity(queryEmbedding, photoEmbedding);
+        scores.add(MapEntry(photo, similarity));
+      }
+    }
+
+    // Trier par similarité (descendant)
+    scores.sort((a, b) => b.value.compareTo(a.value));
+    
+    // Retourner les tops
+    return scores.take(limit).map((e) => e.key).toList();
+  }
+
+  /// Obtient l'embedding d'une photo
+  Future<List<double>?> _getPhotoEmbedding(Photo photo, String apiKey) async {
+    final cacheKey = 'photo_${photo.id}';
+    
+    if (_embeddingCache.containsKey(cacheKey)) {
+      return _embeddingCache[cacheKey];
+    }
+
+    final file = File(photo.path);
+    if (!await file.exists()) {
+      return null;
+    }
+
+    final bytes = await file.readAsBytes();
+    final base64Image = base64Encode(bytes);
+
+    final embedding = await _getEmbedding(base64Image, apiKey, isImage: true);
+    
+    if (embedding != null) {
+      _embeddingCache[cacheKey] = embedding;
+    }
+    
+    return embedding;
+  }
+
+  /// Obtient l'embedding via l'API Mistral
+  Future<List<double>?> _getEmbedding(
+    String text,
+    String apiKey, {
+    bool isImage = false,
+  }) async {
+    try {
+      // Mistral n'a pas encore d'API embeddings dédiée
+      // On utilise une approche alternative avec un prompt
+      final response = await _callMistralAPI(
+        apiKey,
+        [
+          {
+            'role': 'user',
+            'content': isImage
+                ? 'Représente cette image par un vecteur d\'embedding de 384 dimensions. Retourne UNIQUEMENT une liste de nombres séparés par des virgules, sans texte supplémentaire.'
+                : 'Représente ce texte par un vecteur d\'embedding de 384 dimensions. Retourne UNIQUEMENT une liste de nombres séparés par des virgules, sans texte supplémentaire. Texte: $text',
+          },
+        ],
+      );
+
+      if (response != null) {
+        // Parser la réponse (devrait être une liste de nombres)
+        final numbers = response
+            .split(',')
+            .map((s) => s.trim())
+            .where((s) => s.isNotEmpty)
+            .map((s) => double.tryParse(s) ?? 0.0)
+            .toList();
+        
+        // Vérifier la taille
+        if (numbers.length >= 384) {
+          // Normaliser et retourner les 384 premières dimensions
+          return numbers.take(384).toList();
+        }
+      }
+    } catch (e) {
+      print('Erreur lors de la génération de l\'embedding: $e');
+    }
+
+    return null;
+  }
+
+  /// Calcule la similarité cosinus entre deux vecteurs
+  double _cosineSimilarity(List<double> a, List<double> b) {
+    if (a.length != b.length || a.isEmpty) {
+      return 0.0;
+    }
+
+    double dotProduct = 0.0;
+    double normA = 0.0;
+    double normB = 0.0;
+
+    for (int i = 0; i < a.length; i++) {
+      dotProduct += a[i] * b[i];
+      normA += a[i] * a[i];
+      normB += b[i] * b[i];
+    }
+
+    final denominator = sqrt(normA) * sqrt(normB);
+    
+    if (denominator == 0) {
+      return 0.0;
+    }
+
+    return dotProduct / denominator;
+  }
+
+  /// Génère une légende/caption pour une photo
+  Future<String?> generateCaption(Photo photo) async {
+    final apiKey = await _getApiKey();
+    if (apiKey == null) {
+      return null;
+    }
+
+    final file = File(photo.path);
+    if (!await file.exists()) {
+      return null;
+    }
+
+    final bytes = await file.readAsBytes();
+    final base64Image = base64Encode(bytes);
+
+    final response = await _callMistralAPI(
+      apiKey,
+      [
+        {
+          'role': 'user',
+          'content': [
+            {
+              'type': 'text',
+              'text': 'Génère une légende créative et descriptive pour cette image en français. Sois concis mais expressif (1 phrase).',
+            },
+            {
+              'type': 'image',
+              'image': base64Image,
+            },
+          ],
+        },
+      ],
+    );
+
+    return response;
+  }
+
+  /// Améliore automatiquement les tags existants
+  Future<List<String>> enhanceTags(List<String> existingTags, Photo photo) async {
+    final apiKey = await _getApiKey();
+    if (apiKey == null) {
+      return existingTags;
+    }
+
+    final tagsStr = existingTags.join(', ');
+    
+    final response = await _callMistralAPI(
+      apiKey,
+      [
+        {
+          'role': 'user',
+          'content': '''
+Améliore et complète cette liste de tags pour une photo : $tagsStr
+
+Retourne UNIQUEMENT une liste de tags améliorés séparés par des virgules, sans texte supplémentaire.
+Ajoute des synonymes, des catégories plus précises, et améliore les tags existants.
+''',
+        },
+      ],
+    );
+
+    if (response != null) {
+      final enhanced = response
+          .split(',')
+          .map((s) => s.trim())
+          .where((s) => s.isNotEmpty)
+          .toList();
+      
+      // Combiner avec les tags existants
+      final allTags = [...existingTags, ...enhanced];
+      return allTags.toSet().toList();
+    }
+
+    return existingTags;
+  }
+
+  /// Classifie automatiquement les photos par album
+  Future<Map<String, List<Photo>>> classifyByAlbum(List<Photo> photos) async {
+    final apiKey = await _getApiKey();
+    if (apiKey == null) {
+      // Retourner une classification basique par dossier
+      return _classifyByFolder(photos);
+    }
+
+    final Map<String, List<Photo>> albums = {};
+    
+    for (final photo in photos) {
+      final album = await _suggestAlbum(photo, apiKey);
+      
+      if (!albums.containsKey(album)) {
+        albums[album] = [];
+      }
+      albums[album]!.add(photo);
+    }
+
+    return albums;
+  }
+
+  /// Suggère un nom d'album pour une photo
+  Future<String> _suggestAlbum(Photo photo, String apiKey) async {
+    final file = File(photo.path);
+    if (!await file.exists()) {
+      return 'Non classifié';
+    }
+
+    // D'abord essayer avec les métadonnées
+    final folder = path.dirname(photo.path);
+    final folderName = path.basename(folder);
+    
+    if (folderName.isNotEmpty && folderName != '.') {
+      return folderName;
+    }
+
+    // Sinon, utiliser l'IA
+    final bytes = await file.readAsBytes();
+    final base64Image = base64Encode(bytes);
+
+    final response = await _callMistralAPI(
+      apiKey,
+      [
+        {
+          'role': 'user',
+          'content': [
+            {
+              'type': 'text',
+              'text': 'Suggère un nom d\'album pour cette photo. Retourne UNIQUEMENT le nom de l\'album (1-3 mots maximum), sans texte supplémentaire.',
+            },
+            {
+              'type': 'image',
+              'image': base64Image,
+            },
+          ],
+        },
+      ],
+    );
+
+    if (response != null && response.isNotEmpty) {
+      return response;
+    }
+
+    return 'Non classifié';
+  }
+
+  /// Classifie par dossier (fallback)
+  Map<String, List<Photo>> _classifyByFolder(List<Photo> photos) {
+    final Map<String, List<Photo>> albums = {};
+    
+    for (final photo in photos) {
+      final folder = path.dirname(photo.path);
+      final folderName = path.basename(folder);
+      final albumName = folderName.isNotEmpty && folderName != '.' 
+          ? folderName 
+          : 'Non classifié';
+      
+      if (!albums.containsKey(albumName)) {
+        albums[albumName] = [];
+      }
+      albums[albumName]!.add(photo);
+    }
+
+    return albums;
+  }
+
+  /// Nettoie le cache
+  void clearCache() {
+    _embeddingCache.clear();
+    _analysisCache.clear();
+  }
+
+  /// Vérifie si l'analyse IA est disponible
+  Future<bool> isAvailable() async {
+    final apiKey = await _getApiKey();
+    return apiKey != null && apiKey.isNotEmpty;
+  }
+}

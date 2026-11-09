@@ -1,0 +1,1136 @@
+{
+  "@@locale": "fr",
+  "appTitle": "GitPhoto Studio IA",
+  "appTagline": "L'atelier des médias connectés",
+  "navDashboard": "Accueil",
+  "navGallery": "Galerie",
+  "navEditor": "Éditeur",
+  "navGithub": "GitHub",
+  "navPublish": "Publication",
+  "navAgent": "Agent IA",
+  "navHistory": "Historique",
+  "navSettings": "Paramètres",
+  "navHelp": "Mode d'emploi",
+  "navMore": "Plus",
+  "navMenu": "Menu de navigation",
+  "commonLoading": "Chargement…",
+  "commonError": "Une erreur est survenue : {message}",
+  "@commonError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "commonRetry": "Réessayer",
+  "plannedTitle": "En préparation",
+  "plannedPhase": "Prévu en phase {phase} — {phaseName}",
+  "@plannedPhase": {
+    "placeholders": {
+      "phase": {
+        "type": "int"
+      },
+      "phaseName": {
+        "type": "String"
+      }
+    }
+  },
+  "plannedHonesty": "Aucune action n'est proposée ici pour l'instant : les commandes apparaîtront lorsque la fonctionnalité sera réellement implémentée et testée.",
+  "phaseAdvancedPublishing": "Publications avancées",
+  "phaseAiAgent": "Agent IA",
+  "phaseDocumentation": "Documentation",
+  "agentIntro": "Décrivez ce que vous voulez faire ; l'agent propose un plan et attend votre validation avant d'agir.",
+  "agentFeatures": "Fournisseur prioritaire : Mistral (autres fournisseurs configurables)\nOutils typés et validés, aucun accès shell libre\nPlan d'action présenté avant exécution\nConfirmation obligatoire\nAucun média envoyé à une IA sans votre accord",
+  "helpIntro": "Documentation intégrée, consultable hors ligne.",
+  "helpFeatures": "Premiers pas et parcours guidé\nConnexion GitHub et création d'un dépôt\nPublication d'une photo ou d'une vidéo\nCommits, branches et Git LFS\nUtilisation de l'agent IA\nErreurs fréquentes, FAQ et glossaire",
+  "dashActiveRepo": "Dépôt actif",
+  "dashNoRepo": "Aucun dépôt connecté",
+  "dashLocalMedia": "Médias locaux",
+  "dashPending": "En attente",
+  "dashLocalStorage": "Espace local",
+  "dashTransfers": "Transferts",
+  "dashNoTransfers": "Aucun transfert en cours",
+  "dashRecentCommits": "Derniers commits",
+  "dashShortcuts": "Raccourcis",
+  "pixelName": "Pixel",
+  "pixelSemantics": "Pixel, le robot assistant du studio",
+  "pixelWelcome": "Bonjour ! Je suis Pixel. Importez vos médias dans la galerie, connectez GitHub, puis publiez-les en quelques étapes.",
+  "pixelSettingsHint": "Les jetons et clés ne sont jamais enregistrés dans la base locale.",
+  "settingsAppearance": "Apparence",
+  "settingsTheme": "Thème",
+  "themeSystem": "Système",
+  "themeLight": "Clair",
+  "themeDark": "Sombre",
+  "settingsLanguage": "Langue",
+  "languageFrench": "Français",
+  "languageEnglish": "English",
+  "settingsAiProviders": "Fournisseurs IA",
+  "settingsAiProvidersNote": "L'application fonctionne entièrement sans IA.",
+  "aiProviderPriority": "Prioritaire",
+  "aiProviderLocal": "Local",
+  "aiNotConfigured": "Non configuré",
+  "settingsDiagnostics": "Diagnostic",
+  "diagPlatform": "Plateforme",
+  "diagDatabase": "Base de données",
+  "diagSchemaVersion": "Schéma v{version}",
+  "@diagSchemaVersion": {
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "diagGit": "Git",
+  "diagGitLfs": "Git LFS",
+  "diagNotFound": "Non détecté",
+  "diagNotApplicable": "Non applicable sur cette plateforme",
+  "settingsAbout": "À propos",
+  "settingsVersion": "Version {version}",
+  "@settingsVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "commonCancel": "Annuler",
+  "commonClose": "Fermer",
+  "galleryImport": "Importer",
+  "gallerySearchHint": "Rechercher par nom",
+  "galleryFilterAll": "Tous",
+  "galleryFilterImages": "Photos",
+  "galleryFilterVideos": "Vidéos",
+  "gallerySort": "Trier",
+  "gallerySortDate": "Date",
+  "gallerySortName": "Nom",
+  "gallerySortType": "Type",
+  "gallerySortSize": "Taille",
+  "gallerySortAscending": "Ordre croissant",
+  "gallerySortDescending": "Ordre décroissant",
+  "galleryViewGrid": "Affichage en grille",
+  "galleryViewList": "Affichage en liste",
+  "galleryEmptyTitle": "Votre bibliothèque est vide",
+  "galleryEmptyBody": "Importez des photos et des vidéos : le studio en conserve une copie de travail, vos fichiers originaux restent intacts.",
+  "galleryEmptyDropHint": "Vous pouvez aussi glisser-déposer des fichiers ou des dossiers dans cette fenêtre.",
+  "galleryNoResults": "Aucun média ne correspond à ces critères.",
+  "galleryCount": "{count, plural, =0{Aucun média} =1{1 média} other{{count} médias}}",
+  "@galleryCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gallerySelectedCount": "{count, plural, =1{1 sélectionné} other{{count} sélectionnés}}",
+  "@gallerySelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gallerySelectAll": "Tout sélectionner",
+  "galleryClearSelection": "Annuler la sélection",
+  "galleryRemove": "Retirer de la bibliothèque",
+  "galleryRemoveTitle": "{count, plural, =1{Retirer ce média ?} other{Retirer ces {count} médias ?}}",
+  "@galleryRemoveTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "galleryRemoveBody": "Les copies de travail et les miniatures du studio seront effacées. Vos fichiers originaux ne sont pas touchés.",
+  "galleryRemoveConfirm": "Retirer",
+  "galleryRemoved": "{count, plural, =1{1 média retiré} other{{count} médias retirés}}",
+  "@galleryRemoved": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "galleryDropHere": "Déposez vos fichiers pour les importer",
+  "galleryVideoBadge": "Vidéo",
+  "importProgress": "Import en cours : {done} sur {total}",
+  "@importProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "importStop": "Arrêter",
+  "importSummary": "Import terminé : {imported} importé(s), {duplicates} déjà présent(s), {unsupported} non pris en charge, {failed} en échec.",
+  "@importSummary": {
+    "placeholders": {
+      "imported": {
+        "type": "int"
+      },
+      "duplicates": {
+        "type": "int"
+      },
+      "unsupported": {
+        "type": "int"
+      },
+      "failed": {
+        "type": "int"
+      }
+    }
+  },
+  "importCancelled": "Import arrêté : {imported} importé(s) avant l'arrêt.",
+  "@importCancelled": {
+    "placeholders": {
+      "imported": {
+        "type": "int"
+      }
+    }
+  },
+  "importPickerError": "Le sélecteur de fichiers n'a pas pu s'ouvrir : {message}",
+  "@importPickerError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "importDetails": "Détails",
+  "importReportTitle": "Rapport d'import",
+  "importOutcomeImported": "Importé",
+  "importOutcomeDuplicate": "Déjà présent dans la bibliothèque",
+  "importOutcomeUnsupported": "Format non pris en charge",
+  "importOutcomeFailed": "Échec",
+  "viewerInfo": "Informations",
+  "viewerOpenExternal": "Ouvrir avec l'application du système",
+  "viewerOpenExternalFailed": "Impossible d'ouvrir le fichier avec le système.",
+  "viewerPreviewUnavailable": "Aperçu indisponible pour ce format sur cette plateforme.",
+  "viewerVideoUnavailable": "La lecture vidéo intégrée n'est pas disponible sous Linux dans cette version (aucun moteur vidéo installé). Vous pouvez ouvrir la vidéo avec le lecteur du système.",
+  "viewerVideoError": "Impossible de lire cette vidéo : {message}",
+  "@viewerVideoError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "viewerPlay": "Lecture",
+  "viewerPause": "Pause",
+  "viewerNotFound": "Ce média n'existe plus dans la bibliothèque.",
+  "viewerFileMissing": "La copie de travail de ce média est introuvable.",
+  "metaFileName": "Nom",
+  "metaType": "Type",
+  "metaSize": "Taille",
+  "metaDimensions": "Dimensions",
+  "metaDuration": "Durée",
+  "metaTakenAt": "Date",
+  "metaImportedAt": "Importé le",
+  "metaCamera": "Appareil",
+  "metaGps": "Position GPS",
+  "metaGpsPresent": "Présente : elle sera visible par tous si l'image est publiée telle quelle.",
+  "metaGpsAbsent": "Absente",
+  "metaSha256": "Empreinte SHA-256",
+  "metaSource": "Provenance",
+  "metaUnknown": "Inconnue",
+  "metaVideoUnavailable": "Métadonnées vidéo indisponibles sur cette plateforme.",
+  "commonOpenInBrowser": "Ouvrir dans le navigateur",
+  "commonCopy": "Copier",
+  "commonCopied": "Copié",
+  "commonContinue": "Continuer",
+  "commonBack": "Retour",
+  "commonRefresh": "Actualiser",
+  "commonUnknownError": "Erreur inattendue : {message}",
+  "@commonUnknownError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "ghConnectTitle": "Connexion à GitHub",
+  "ghConnectIntro": "Le jeton est vérifié auprès de GitHub puis conservé uniquement dans le trousseau sécurisé du système, jamais dans la base locale ni dans les journaux.",
+  "ghStoreUnavailable": "Le trousseau sécurisé du système est inaccessible. Sous Linux, vérifiez qu'un service de secrets (GNOME Keyring, KWallet…) est actif et déverrouillé. Sans lui, aucun identifiant ne peut être enregistré.",
+  "ghPatTitle": "Jeton d'accès personnel (recommandé)",
+  "ghPatHelp": "Créez un jeton « fine-grained » limité aux seuls dépôts voulus, avec la permission Contents en lecture et écriture (Metadata en lecture est ajouté automatiquement). Pour créer des dépôts depuis l'application, ajoutez Administration en écriture.",
+  "ghPatCreate": "Créer un jeton sur GitHub",
+  "ghPatField": "Jeton GitHub",
+  "ghPatConnect": "Vérifier et se connecter",
+  "ghDeviceTitle": "Connexion par le navigateur",
+  "ghDeviceHelp": "Nécessite l'identifiant client (Client ID) d'une application OAuth ou GitHub App dont le « Device Flow » est activé. Aucun secret n'est requis.",
+  "ghDeviceClientId": "Client ID",
+  "ghDeviceStart": "Se connecter avec le navigateur",
+  "ghDeviceCodeIntro": "Saisissez ce code sur la page GitHub qui vient de s'ouvrir :",
+  "ghDeviceWaiting": "En attente de votre autorisation…",
+  "ghDeviceDenied": "Autorisation refusée ou annulée.",
+  "ghDeviceExpired": "Le code a expiré. Recommencez.",
+  "ghDeviceMisconfigured": "Configuration refusée par GitHub : {detail}",
+  "@ghDeviceMisconfigured": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "ghConnectedAs": "Connecté en tant que {login}",
+  "@ghConnectedAs": {
+    "placeholders": {
+      "login": {
+        "type": "String"
+      }
+    }
+  },
+  "ghTokenFineGrained": "Jeton fine-grained ou GitHub App : permissions définies sur GitHub",
+  "ghTokenScopes": "Portées du jeton : {scopes}",
+  "@ghTokenScopes": {
+    "placeholders": {
+      "scopes": {
+        "type": "String"
+      }
+    }
+  },
+  "ghTokenExpires": "Expire le {date}",
+  "@ghTokenExpires": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "ghDisconnect": "Se déconnecter",
+  "ghDisconnectTitle": "Se déconnecter de GitHub ?",
+  "ghDisconnectBody": "Le jeton sera effacé du trousseau de cet appareil. Pour le révoquer définitivement, supprimez-le aussi dans les paramètres de votre compte GitHub.",
+  "ghRevokePage": "Gérer mes jetons sur GitHub",
+  "ghSessionError": "Le jeton enregistré n'a pas pu être vérifié.",
+  "ghRepos": "Dépôts",
+  "ghReposSearch": "Filtrer les dépôts",
+  "ghReposEmpty": "Aucun dépôt accessible avec ce jeton.",
+  "ghPrivate": "Privé",
+  "ghPublic": "Public",
+  "ghReadOnly": "Lecture seule",
+  "ghActive": "Actif",
+  "ghNewRepo": "Nouveau dépôt",
+  "ghNewRepoName": "Nom du dépôt",
+  "ghNewRepoNameInvalid": "Lettres, chiffres, « - », « _ » et « . » uniquement (100 caractères maximum).",
+  "ghNewRepoDescription": "Description (facultative)",
+  "ghNewRepoPrivate": "Privé : visible par vous et les personnes invitées",
+  "ghNewRepoPublic": "Public : visible par tout le monde sur Internet",
+  "ghNewRepoCreate": "Créer",
+  "ghNewRepoPublicConfirmTitle": "Créer un dépôt public ?",
+  "ghNewRepoPublicConfirmBody": "Tout ce que vous publierez dans « {name} » sera visible par n'importe qui, y compris les métadonnées des photos (position GPS…).",
+  "@ghNewRepoPublicConfirmBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "ghNewRepoPublicConfirm": "Oui, créer un dépôt public",
+  "ghNewRepoCreated": "Dépôt {name} créé.",
+  "@ghNewRepoCreated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "ghBranch": "Branche",
+  "ghRoot": "Racine",
+  "ghFolderEmpty": "Dossier vide.",
+  "ghRepoEmpty": "Ce dépôt ne contient encore aucun fichier.",
+  "ghCommits": "Derniers commits",
+  "ghSetActive": "Définir comme dépôt actif",
+  "ghActiveSet": "{name} est maintenant le dépôt actif.",
+  "@ghActiveSet": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "ghPublishHere": "Publier ici",
+  "errUnauthorized": "GitHub refuse le jeton : il est invalide, expiré ou révoqué. Reconnectez-vous avec un nouveau jeton.",
+  "errForbidden": "Permission insuffisante. Pour un jeton fine-grained, vérifiez que ce dépôt est inclus et que la permission nécessaire (Contents en écriture, ou Administration pour créer un dépôt) est accordée. Détail : {detail}",
+  "@errForbidden": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errNotFound": "Introuvable. Le dépôt, la branche ou le dossier n'existe pas, ou votre jeton n'y a pas accès.",
+  "errRateLimited": "Limite de requêtes GitHub atteinte. Réessayez après {time}.",
+  "@errRateLimited": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "errRateLimitedNoTime": "Limite de requêtes GitHub atteinte. Réessayez dans quelques minutes.",
+  "errConflict": "La branche a été modifiée sur GitHub pendant la publication. Rien n'a été publié : relancez l'analyse pour tenir compte des nouveautés.",
+  "errEmptyRepository": "Ce dépôt est vide.",
+  "errValidation": "GitHub a refusé la demande : {detail}",
+  "@errValidation": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errNetwork": "Connexion à GitHub impossible. Vérifiez votre accès à Internet. ({detail})",
+  "@errNetwork": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errServer": "GitHub rencontre un problème (erreur serveur). Réessayez plus tard.",
+  "pubNotConnected": "Connectez-vous à GitHub pour publier.",
+  "pubGoToGithub": "Aller à l'écran GitHub",
+  "pubNoMedia": "Votre bibliothèque est vide : importez d'abord des médias dans la galerie.",
+  "pubStepMedia": "Médias",
+  "pubStepDestination": "Destination",
+  "pubStepAnalysis": "Analyse",
+  "pubStepMessage": "Message",
+  "pubStepReview": "Vérification",
+  "pubStepResult": "Résultat",
+  "pubSelectedCount": "{count, plural, =0{Aucun média sélectionné} =1{1 média sélectionné} other{{count} médias sélectionnés}}",
+  "@pubSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pubRepository": "Dépôt",
+  "pubChooseRepository": "Choisir un dépôt",
+  "pubFolder": "Dossier dans le dépôt",
+  "pubFolderHelp": "Ex. : photos/2024. Un dossier inexistant sera créé par l'ajout des fichiers. Laisser vide pour la racine.",
+  "pubFolderInvalid": "Chemin invalide (pas de « .. », de « .git » ni de caractères spéciaux).",
+  "pubEmptyRepoNote": "Dépôt vide : les fichiers seront publiés un par un (un commit par fichier), sur la branche par défaut.",
+  "pubAnalyze": "Analyser",
+  "pubAnalyzing": "Analyse : {done} sur {total}",
+  "@pubAnalyzing": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "pubActionAdd": "Nouveau",
+  "pubActionSkip": "Identique sur GitHub — ignoré",
+  "pubActionRenamed": "Nom déjà pris — publié sous un autre nom",
+  "pubActionOverwrite": "Remplacera le fichier existant",
+  "pubBlockedLfs": "Plus de 100 Mio alors que Git LFS est désactivé dans les paramètres",
+  "pubBlockedPath": "Nom de fichier incompatible avec un dépôt",
+  "pubWarnLarge": "Volumineux (plus de 50 Mio) : GitHub le signalera",
+  "pubWarnGpsPublic": "Contient une position GPS et le dépôt est public",
+  "pubOverwriteToggle": "Remplacer plutôt que renommer",
+  "pubTruncatedTree": "Le dépôt est très volumineux : l'analyse des conflits est partielle. GitHub n'écrasera toutefois rien sans que ce soit prévu.",
+  "pubOptimizationNote": "Optimisation des images avant publication : disponible en phase 4.",
+  "pubSummaryCounts": "{upload} à envoyer ({size}), {skipped} ignoré(s), {blocked} bloqué(s)",
+  "@pubSummaryCounts": {
+    "placeholders": {
+      "upload": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      },
+      "skipped": {
+        "type": "int"
+      },
+      "blocked": {
+        "type": "int"
+      }
+    }
+  },
+  "pubNothingToUpload": "Rien à publier : tous les fichiers sont déjà présents ou bloqués.",
+  "pubMessageLabel": "Message de commit",
+  "pubMessageDefault": "{count, plural, =1{Ajout d'un média via GitPhoto Studio} other{Ajout de {count} médias via GitPhoto Studio}}",
+  "@pubMessageDefault": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pubMessageEmpty": "Le message ne peut pas être vide.",
+  "pubReviewIntro": "Voici exactement ce qui sera envoyé :",
+  "pubReviewTarget": "{repo} · branche {branch}",
+  "@pubReviewTarget": {
+    "placeholders": {
+      "repo": {
+        "type": "String"
+      },
+      "branch": {
+        "type": "String"
+      }
+    }
+  },
+  "pubReviewSingleCommit": "Tous les fichiers seront ajoutés en un seul commit.",
+  "pubReviewOverwriteWarning": "{count, plural, =1{1 fichier existant sera remplacé.} other{{count} fichiers existants seront remplacés.}} L'ancienne version reste consultable dans l'historique Git.",
+  "@pubReviewOverwriteWarning": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pubConfirm": "Publier sur GitHub",
+  "pubConfirmTitle": "Confirmer la publication ?",
+  "pubConfirmBody": "{count, plural, =1{1 fichier sera publié} other{{count} fichiers seront publiés}} dans {repo} ({visibility}).",
+  "@pubConfirmBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "repo": {
+        "type": "String"
+      },
+      "visibility": {
+        "type": "String"
+      }
+    }
+  },
+  "pubStepUploading": "Envoi des fichiers : {done} sur {total}",
+  "@pubStepUploading": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "pubStepCommitting": "Création du commit…",
+  "pubStepUpdating": "Mise à jour de la branche…",
+  "pubStepVerifying": "Vérification sur GitHub…",
+  "pubSuccess": "Publication réussie",
+  "pubVerified": "Vérifié : les fichiers sont présents sur GitHub avec le contenu attendu.",
+  "pubNotVerified": "Publié, mais la vérification distante n'a pas pu confirmer tous les fichiers. Consultez le commit sur GitHub.",
+  "pubCommit": "Commit {sha}",
+  "@pubCommit": {
+    "placeholders": {
+      "sha": {
+        "type": "String"
+      }
+    }
+  },
+  "pubFailed": "La publication a échoué",
+  "pubNew": "Nouvelle publication",
+  "histEmpty": "Aucune opération pour l'instant.",
+  "histStatusRunning": "En cours",
+  "histStatusSuccess": "Réussie",
+  "histStatusFailed": "Échouée",
+  "histStatusInterrupted": "Interrompue",
+  "histInterruptedHelp": "L'application a été fermée pendant l'opération : son résultat est inconnu. Vérifiez le dépôt sur GitHub ; une nouvelle analyse ignorera les fichiers déjà publiés.",
+  "histFiles": "{count, plural, =1{1 fichier} other{{count} fichiers}}",
+  "@histFiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "histRetryNote": "Une publication échouée ou interrompue peut être reprise : seuls les fichiers absents de GitHub sont envoyés, sans doublon. Après une perte de connexion, l'application réessaie d'elle-même deux fois.",
+  "histError": "Erreur",
+  "dashNoCommitsConnect": "Connectez-vous à GitHub et choisissez un dépôt actif pour voir ses derniers commits.",
+  "settingsGithub": "Compte GitHub",
+  "settingsGithubNotConnected": "Non connecté",
+  "pixelPublishTip": "Astuce : vérifiez la colonne GPS avant de publier dans un dépôt public.",
+  "editorChooseMedia": "Choisir un média à retoucher",
+  "editorNoMedia": "Importez d'abord des médias dans la galerie.",
+  "editorOriginalsSafe": "Chaque traitement crée une nouvelle version : l'original n'est jamais modifié.",
+  "editorFileName": "Nom du fichier",
+  "editorRename": "Renommer",
+  "editorRenamed": "Média renommé.",
+  "editorRenameInvalid": "Nom de fichier invalide.",
+  "editorAlbum": "Album",
+  "editorNoAlbum": "Aucun album",
+  "editorVersionOf": "Version de « {name} »",
+  "@editorVersionOf": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorImageSection": "Optimisation de l'image",
+  "presetWeb": "Web (1920 px)",
+  "presetLight": "Léger (1280 px)",
+  "presetThumbnail": "Miniature (400 px)",
+  "presetCustom": "Personnalisé",
+  "editorMaxDimension": "Plus grand côté : {px} px",
+  "@editorMaxDimension": {
+    "placeholders": {
+      "px": {
+        "type": "int"
+      }
+    }
+  },
+  "editorKeepDimensions": "Garder les dimensions d'origine",
+  "editorFormat": "Format",
+  "editorQuality": "Qualité : {quality} %",
+  "@editorQuality": {
+    "placeholders": {
+      "quality": {
+        "type": "int"
+      }
+    }
+  },
+  "editorMetadata": "Métadonnées",
+  "metaStripAll": "Tout retirer (recommandé pour publier)",
+  "metaKeepBasic": "Garder date et appareil (jamais le GPS)",
+  "editorPreview": "Aperçu",
+  "editorPreviewing": "Calcul de l'aperçu…",
+  "editorOriginal": "Original",
+  "editorResult": "Résultat",
+  "editorSizeChange": "{original} → {result} ({change})",
+  "@editorSizeChange": {
+    "placeholders": {
+      "original": {
+        "type": "String"
+      },
+      "result": {
+        "type": "String"
+      },
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "editorSaveVersion": "Enregistrer comme nouvelle version",
+  "editorVersionSaved": "Nouvelle version créée : {name}",
+  "@editorVersionSaved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editorVersionDuplicate": "Une version identique existe déjà dans la bibliothèque.",
+  "editorVideoSection": "Préparation de la vidéo",
+  "videoPresetLight": "Légère (480p)",
+  "videoPreset720": "720p",
+  "videoPreset1080": "1080p",
+  "videoRemoveAudio": "Retirer le son",
+  "videoEstimate": "Taille estimée : {size} (original : {original})",
+  "@videoEstimate": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      },
+      "original": {
+        "type": "String"
+      }
+    }
+  },
+  "videoEstimateUnknown": "Taille estimée inconnue : durée de la vidéo non disponible.",
+  "videoEngine": "Moteur : {engine}",
+  "@videoEngine": {
+    "placeholders": {
+      "engine": {
+        "type": "String"
+      }
+    }
+  },
+  "videoConvert": "Convertir en MP4",
+  "videoConverting": "Conversion en cours… {percent} %",
+  "@videoConverting": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "videoUnavailableLinux": "Conversion vidéo indisponible : ffmpeg n'est pas installé. Installez-le avec « sudo apt install ffmpeg », puis relancez la détection dans Paramètres › Diagnostic.",
+  "videoUnavailable": "Conversion vidéo indisponible sur cette plateforme.",
+  "jobStop": "Arrêter",
+  "jobBatchProgress": "Optimisation : {done} sur {total}",
+  "@jobBatchProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "jobDone": "{count, plural, =0{Aucune version créée} =1{1 version créée} other{{count} versions créées}}",
+  "@jobDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "jobCancelled": "Traitement arrêté.",
+  "jobFailed": "Échec : {message}",
+  "@jobFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "dupTitle": "Doublons probables",
+  "dupHelp": "Images visuellement très proches (redimensionnées, recompressées…). Les copies exactes sont déjà refusées à l'import.",
+  "dupNone": "Aucun doublon probable.",
+  "dupGroup": "{count} images semblables",
+  "@dupGroup": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dupRemove": "Retirer",
+  "dupAnalyzing": "Analyse des images…",
+  "dupRemoveTitle": "Retirer « {name} » ?",
+  "@dupRemoveTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "albumsTitle": "Albums",
+  "albumsNone": "Aucun album pour l'instant.",
+  "albumNew": "Nouvel album",
+  "albumName": "Nom de l'album",
+  "albumCreate": "Créer",
+  "albumRename": "Renommer",
+  "albumDelete": "Supprimer l'album",
+  "albumDeleteBody": "Les médias de « {name} » restent dans la bibliothèque, simplement hors album.",
+  "@albumDeleteBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "albumCount": "{count, plural, =0{vide} =1{1 média} other{{count} médias}}",
+  "@albumCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "albumAutoOrganize": "Classer par année et mois",
+  "albumAutoOrganizeBody": "{count, plural, =0{Aucun média hors album à classer.} =1{1 média hors album sera rangé dans un album « AAAA-MM » selon sa date.} other{{count} médias hors album seront rangés dans des albums « AAAA-MM » selon leur date.}}",
+  "@albumAutoOrganizeBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "albumAutoOrganized": "{count, plural, =1{1 média classé} other{{count} médias classés}}",
+  "@albumAutoOrganized": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "galleryOptimize": "Optimiser",
+  "galleryOptimizeTitle": "{count, plural, =1{Optimiser l'image sélectionnée} other{Optimiser les {count} images sélectionnées}}",
+  "@galleryOptimizeTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "galleryOptimizeVideosIgnored": "Les vidéos sélectionnées sont ignorées : préparez-les une par une dans l'éditeur.",
+  "galleryAddToAlbum": "Ranger dans un album",
+  "galleryAllAlbums": "Tous les albums",
+  "galleryMovedToAlbum": "{count, plural, =1{1 média rangé} other{{count} médias rangés}} dans « {name} »",
+  "@galleryMovedToAlbum": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "viewerEdit": "Retoucher",
+  "metaVersionOf": "Version de",
+  "diagFfmpeg": "ffmpeg (vidéo)",
+  "videoNotSmaller": "La conversion ne réduit pas la taille ({source} → {output}) : la version n'a pas été conservée. La vidéo est sans doute déjà bien compressée ; essayez « Retirer le son » ou un préréglage plus bas.",
+  "@videoNotSmaller": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "output": {
+        "type": "String"
+      }
+    }
+  },
+  "histStatusQueued": "En file d'attente",
+  "histStatusCancelled": "Annulée",
+  "histResume": "Reprendre",
+  "histCancel": "Annuler",
+  "histCancelTitle": "Annuler cette publication ?",
+  "histCancelBody": "Les fichiers pas encore publiés ne seront pas envoyés. Ce qui est déjà sur GitHub n'est pas retiré.",
+  "histResumeNote": "La reprise relit d'abord GitHub : les fichiers déjà publiés ne sont jamais renvoyés.",
+  "histAttempts": "{count, plural, =1{1 tentative} other{{count} tentatives}}",
+  "@histAttempts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "entryPending": "En attente",
+  "entryUploaded": "Envoyé, commit à finaliser",
+  "entryDone": "Publié",
+  "entrySkipped": "Déjà présent sur GitHub",
+  "entryFailed": "Échec",
+  "entryCancelled": "Annulé",
+  "strategyApi": "API",
+  "strategyLfs": "Git LFS",
+  "strategyGit": "Git",
+  "pubCancelRunning": "Annuler la publication",
+  "pubCancelled": "Publication annulée : rien n'a été publié.",
+  "pubQueuedNote": "La publication passe par la file d'attente : vous pouvez quitter cet écran, elle se poursuit et reste visible dans l'Historique.",
+  "pubViaLfs": "Gros fichier : envoyé par Git LFS",
+  "pubViaGit": "Envoyé par Git natif",
+  "pubBlockedLfsMax": "Plus de 2 Gio : dépasse la taille maximale d'un fichier Git LFS chez GitHub (compte gratuit)",
+  "pubLfsQuotaNote": "Les fichiers Git LFS utilisent le quota de stockage LFS de votre compte GitHub.",
+  "errDuplicate": "« {path} » est déjà en attente de publication vers ce dépôt.",
+  "@errDuplicate": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "errPathConflict": "« {path} » a été modifié sur GitHub depuis l'analyse. Rien n'a été publié : relancez l'analyse.",
+  "@errPathConflict": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsPublishing": "Publication",
+  "settingsLfs": "Git LFS pour les fichiers de plus de 50 Mio",
+  "settingsLfsHelp": "Recommandé. Fonctionne aussi sous Android, sans outil à installer. Utilise le quota LFS du compte GitHub.",
+  "settingsNativeGit": "Publier avec le Git de l'ordinateur",
+  "settingsNativeGitHelp": "Linux, si Git est détecté. Les gros fichiers passent toujours par Git LFS en HTTP.",
+  "settingsNativeGitUnavailable": "Git n'est pas détecté sur cet appareil : l'API GitHub est utilisée.",
+  "agentDisabledTitle": "L'assistant IA est désactivé",
+  "agentDisabledBody": "L'application fonctionne entièrement sans IA. Pour utiliser l'agent, activez-le et configurez un fournisseur (Mistral recommandé) dans les paramètres.",
+  "agentOpenSettings": "Ouvrir les paramètres de l'IA",
+  "agentNeedsKey": "Enregistrez d'abord une clé d'API pour {provider} dans les paramètres.",
+  "@agentNeedsKey": {
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "agentNeedsModel": "Choisissez un modèle dans les paramètres.",
+  "agentConsentTitle": "Avant de commencer",
+  "agentConsentBody": "Pour comprendre vos demandes, l'agent envoie à {provider} votre message et des métadonnées : noms de fichiers, tailles, dates, albums, dimensions, présence d'une position GPS (jamais la position elle-même), noms de vos dépôts GitHub et historique des publications.\n\nAucune image ni vidéo n'est envoyée. Aucun jeton ni aucune clé n'est transmis au modèle.",
+  "@agentConsentBody": {
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "agentConsentAccept": "J'accepte",
+  "agentInputHint": "Ex. : « Publie ces photos dans mon dépôt Portfolio »",
+  "agentSend": "Envoyer",
+  "agentThinking": "L'agent réfléchit…",
+  "agentConsulting": "L'agent consulte : {tool}",
+  "@agentConsulting": {
+    "placeholders": {
+      "tool": {
+        "type": "String"
+      }
+    }
+  },
+  "agentStop": "Arrêter",
+  "agentNewConversation": "Nouvelle conversation",
+  "agentExamplesTitle": "Exemples de demandes",
+  "agentExamples": "Publie les photos sélectionnées dans mon dépôt Portfolio\nClasse mes images dans des albums par année et par mois\nRéduis la taille des photos sans trop perdre en qualité\nPrépare un album de voyage et génère un README\nExplique pourquoi ma dernière publication a échoué\nTrouve les doublons avant la publication\nQuelles vidéos passeront par Git LFS ?",
+  "agentToolsUsed": "Informations consultées : {tools}",
+  "@agentToolsUsed": {
+    "placeholders": {
+      "tools": {
+        "type": "String"
+      }
+    }
+  },
+  "agentSafetyNote": "L'agent ne peut rien supprimer ni remplacer, et n'agit qu'après votre confirmation.",
+  "toolGetSelection": "sélection",
+  "toolSearchMedia": "bibliothèque",
+  "toolListAlbums": "albums",
+  "toolFindSimilar": "doublons",
+  "toolGithubStatus": "GitHub",
+  "toolRecentOperations": "historique",
+  "toolPreviewPublication": "aperçu de publication",
+  "planTitle": "Plan proposé",
+  "planMediaCount": "{count, plural, =1{1 média} other{{count} médias}}",
+  "@planMediaCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "planFromStep": "les copies de l'étape {step}",
+  "@planFromStep": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      }
+    }
+  },
+  "planStepMove": "Ranger {target} dans l'album « {album} »",
+  "@planStepMove": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      },
+      "album": {
+        "type": "String"
+      }
+    }
+  },
+  "planStepOrganizeYear": "Ranger {target} dans des albums par année",
+  "@planStepOrganizeYear": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "planStepOrganizeMonth": "Ranger {target} dans des albums par mois (AAAA-MM)",
+  "@planStepOrganizeMonth": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "planStepOptimize": "Créer des versions optimisées de {count, plural, =1{1 image} other{{count} images}} — {preset}. Originaux conservés, métadonnées retirées.",
+  "@planStepOptimize": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "preset": {
+        "type": "String"
+      }
+    }
+  },
+  "planStepConvert": "Créer des versions converties de {count, plural, =1{1 vidéo} other{{count} vidéos}} — {preset}. Originaux conservés.",
+  "@planStepConvert": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "preset": {
+        "type": "String"
+      }
+    }
+  },
+  "planStepPublish": "Publier {target} dans {repo}, branche {branch}",
+  "@planStepPublish": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      },
+      "repo": {
+        "type": "String"
+      },
+      "branch": {
+        "type": "String"
+      }
+    }
+  },
+  "planReadmeOnly": "un README",
+  "planPublishFolder": "Dossier : {folder}",
+  "@planPublishFolder": {
+    "placeholders": {
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "planPublishRoot": "Dossier : racine du dépôt",
+  "planPublishMessage": "Message du commit : {message}",
+  "@planPublishMessage": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "planPublishReadme": "Ajoute un README.md au même commit",
+  "planPublishSafety": "Un seul commit. Aucun fichier existant n'est remplacé (renommage en cas de conflit). Les fichiers déjà publiés à l'identique sont ignorés.",
+  "planWarnGps": "{count, plural, =1{1 photo publiée contient} other{{count} photos publiées contiennent}} une position GPS.",
+  "@planWarnGps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "planWarnPublic": "{repo} est un dépôt public : les fichiers seront visibles par tout le monde.",
+  "@planWarnPublic": {
+    "placeholders": {
+      "repo": {
+        "type": "String"
+      }
+    }
+  },
+  "planWarnVideo": "La conversion vidéo n'est pas disponible sur cet appareil : cette étape échouera.",
+  "planExecute": "Exécuter le plan",
+  "planReject": "Refuser",
+  "planConfirmTitle": "Exécuter ce plan ?",
+  "planConfirmBody": "{count, plural, =1{1 action va être exécutée.} other{{count} actions vont être exécutées dans l'ordre.}} Vous pourrez arrêter entre deux fichiers. Rien n'est supprimé.",
+  "@planConfirmBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "planConfirmPublish": "Des fichiers seront publiés sur GitHub.",
+  "planStatusRejected": "Plan refusé : rien n'a été fait.",
+  "planStatusExpired": "Plan non confirmé, remplacé par votre nouvelle demande.",
+  "planStatusRunning": "Exécution en cours…",
+  "planProgress": "Étape {step} — {done}/{total}",
+  "@planProgress": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "planDoneOk": "Plan exécuté et vérifié.",
+  "planDonePartial": "Plan exécuté avec des réserves (voir le détail).",
+  "planDoneFailed": "Le plan n'a pas pu être exécuté entièrement.",
+  "planDoneCancelled": "Exécution arrêtée.",
+  "planArchived": "Plan d'une conversation précédente (ne peut plus être exécuté) : {summary}",
+  "@planArchived": {
+    "placeholders": {
+      "summary": {
+        "type": "String"
+      }
+    }
+  },
+  "stepDone": "Fait",
+  "stepPartial": "Fait en partie",
+  "stepFailed": "Échec",
+  "stepSkipped": "Non exécutée",
+  "stepCancelled": "Arrêtée",
+  "stepAffected": "{count, plural, =1{1 élément traité} other{{count} éléments traités}}",
+  "@stepAffected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stepProduced": "{count, plural, =1{1 copie créée} other{{count} copies créées}}",
+  "@stepProduced": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stepAlreadyPublished": "Déjà publié à l'identique : aucun commit nécessaire.",
+  "stepRenamed": "{count, plural, =1{1 fichier renommé} other{{count} fichiers renommés}} pour ne rien écraser",
+  "@stepRenamed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stepVerified": "Contenu vérifié sur GitHub",
+  "stepNotVerified": "Commit créé, mais contenu distant non vérifié",
+  "aiErrUnauthorized": "Clé d'API refusée par le fournisseur. Vérifiez-la dans les paramètres.",
+  "aiErrForbidden": "Accès refusé par le fournisseur (droits de la clé ou modèle non autorisé).",
+  "aiErrNotFound": "Modèle ou service introuvable. Choisissez un autre modèle.",
+  "aiErrRateLimited": "Trop de requêtes ou quota épuisé. Réessayez plus tard.",
+  "aiErrBadRequest": "Le fournisseur a refusé la demande.",
+  "aiErrToolsUnsupported": "Ce modèle ne sait pas utiliser d'outils. Choisissez un modèle compatible (par ex. mistral-small-latest).",
+  "aiErrNetwork": "Impossible de joindre le fournisseur. Vérifiez la connexion.",
+  "aiErrTimeout": "Le fournisseur n'a pas répondu à temps.",
+  "aiErrServer": "Le fournisseur rencontre une erreur. Réessayez plus tard.",
+  "aiErrInvalid": "Réponse inattendue du fournisseur.",
+  "aiErrNotConfigured": "L'IA n'est pas configurée (paramètres).",
+  "aiErrLoop": "L'agent n'a pas réussi à conclure. Reformulez votre demande.",
+  "aiErrDetail": "Détail : {detail}",
+  "@aiErrDetail": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "aiEnable": "Activer l'assistant IA",
+  "aiEnableHelp": "Désactivé par défaut. Toutes les autres fonctions marchent sans IA.",
+  "aiProvider": "Fournisseur",
+  "aiApiKey": "Clé d'API",
+  "aiKeySaved": "Clé enregistrée dans le trousseau du système",
+  "aiKeyMissing": "Aucune clé enregistrée",
+  "aiKeyHint": "Collez votre clé ici",
+  "aiKeySave": "Enregistrer la clé",
+  "aiKeyDelete": "Supprimer la clé",
+  "aiKeyGet": "Obtenir une clé",
+  "aiKeyStoreUnavailable": "Trousseau du système indisponible : aucune clé ne peut être enregistrée de façon sûre.",
+  "aiBaseUrl": "Adresse du serveur",
+  "aiBaseUrlSave": "Enregistrer l'adresse",
+  "aiBaseUrlInvalid": "Adresse refusée (http:// ou https://, sans identifiants).",
+  "aiModel": "Modèle",
+  "aiModelLoad": "Charger la liste des modèles",
+  "aiModelTools": "outils",
+  "aiModelNoTools": "sans outils",
+  "aiTest": "Tester la connexion",
+  "aiTestOk": "Connexion réussie — {detail}",
+  "@aiTestOk": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "aiTestFailed": "Échec de la connexion",
+  "aiConsent": "Autoriser l'envoi des métadonnées à ce fournisseur",
+  "aiConsentHelp": "Noms, tailles, dates, albums, dépôts. Jamais d'image ni de vidéo.",
+  "aiSaveConversations": "Enregistrer les conversations sur l'appareil",
+  "aiSaveConversationsHelp": "Désactivé par défaut. Elles restent locales et peuvent être effacées.",
+  "aiDeleteConversations": "Effacer les conversations enregistrées",
+  "aiDeleteConversationsDone": "Conversations effacées.",
+  "aiVerifiedReal": "Testé avec le vrai service",
+  "aiNotVerifiedReal": "Non testé avec le vrai service (serveur simulé uniquement)",
+  "aiCapabilities": "Conversation et appels d'outils. Vision non utilisée : aucun média n'est envoyé."
+}

@@ -1,0 +1,165 @@
+import 'dart:io' show File;
+/// Widget de visualisation de photo pour GitPhoto Studio
+/// Affiche une photo en plein écran avec des animations
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../core/models/photo_model.dart';
+import '../widgets/animations/photo_animations.dart';
+import '../core/config/animation_config.dart';
+
+/// Visionneuse de photo avec animations
+class PhotoViewer extends StatefulWidget {
+  final Photo photo;
+  final VoidCallback onClose;
+  final bool showAppBar;
+
+  const PhotoViewer({
+    super.key,
+    required this.photo,
+    required this.onClose,
+    this.showAppBar = true,
+  });
+
+  @override
+  State<PhotoViewer> createState() => _PhotoViewerState();
+}
+
+class _PhotoViewerState extends State<PhotoViewer> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _zoomAnimation;
+  late Animation<Offset> _slideAnimation;
+  
+  bool _isZoomed = false;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: AnimationConfig.normal,
+      vsync: this,
+    );
+
+    _zoomAnimation = Tween<double>(begin: 1.0, end: 2.0).animate(
+      CurvedAnimation(parent: _controller, curve: AnimationConfig.easeInOut),
+    );
+
+    _slideAnimation = Tween<Offset>(begin: Offset.zero, end: const Offset(0, -100)).animate(
+      CurvedAnimation(parent: _controller, curve: AnimationConfig.easeInOut),
+    );
+
+    // Charger l'image
+    Future.delayed(const Duration(milliseconds: 300), () {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: widget.showAppBar ? _buildAppBar() : null,
+      body: GestureDetector(
+        onTap: () {
+          if (_isZoomed) {
+            _controller.reverse();
+            setState(() => _isZoomed = false);
+          } else {
+            widget.onClose();
+          }
+        },
+        onDoubleTap: () {
+          setState(() => _isZoomed = !_isZoomed);
+          _isZoomed ? _controller.forward() : _controller.reverse();
+        },
+        child: Center(
+          child: _isLoading
+              ? PhotoLoadingAnimation(size: 100)
+              : _buildPhotoImage(),
+        ),
+      ),
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar() {
+    return AppBar(
+      backgroundColor: Colors.black.withOpacity(0.8),
+      elevation: 0,
+      leading: IconButton(
+        icon: const Icon(Icons.close, color: Colors.white),
+        onPressed: widget.onClose,
+      ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.favorite_border, color: Colors.white),
+          onPressed: () {
+            // TODO: Toggle favorite
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.share, color: Colors.white),
+          onPressed: () {
+            // TODO: Share
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.analytics, color: Colors.white),
+          onPressed: () {
+            // TODO: AI Analysis
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPhotoImage() {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Transform.scale(
+          scale: _zoomAnimation.value,
+          child: Transform.translate(
+            offset: _slideAnimation.value * (1 - _zoomAnimation.value),
+            child: InteractiveViewer(
+              panEnabled: _isZoomed,
+              minScale: 1.0,
+              maxScale: 4.0,
+              child: Hero(
+                tag: 'photo_${widget.photo.id}',
+                child: Image.file(
+                  File(widget.photo.filePath),
+                  fit: _isZoomed ? BoxFit.contain : BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) => Center(
+                    child: Icon(
+                      Icons.image_not_supported,
+                      size: 100,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                    if (wasSynchronouslyLoaded || frame != null) {
+                      return FadeInPhoto(
+                        child: child,
+                        duration: AnimationConfig.fadeInDuration,
+                      );
+                    }
+                    return child;
+                  },
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}

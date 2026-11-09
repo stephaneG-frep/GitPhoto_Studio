@@ -1,0 +1,255 @@
+/// Modèle pour les résultats d'analyse IA
+
+/// Résultat d'une analyse IA d'une photo
+class AIAnalysisResult {
+  /// ID de la photo analysée
+  final String photoId;
+
+  /// Description détaillée de l'image
+  final String description;
+
+  /// Liste de tags/keywords
+  final List<String> tags;
+
+  /// Catégories principales
+  final List<String> categories;
+
+  /// Score de qualité (1-10)
+  final int qualityScore;
+
+  /// Couleurs dominantes (noms de couleurs)
+  final List<String> dominantColors;
+
+  /// Objets détectés dans l'image
+  final List<String> objectsDetected;
+
+  /// Ambiance de l'image
+  final String mood;
+
+  /// Style de la photo
+  final String style;
+
+  /// Notes techniques
+  final Map<String, String> technicalNotes;
+
+  /// Réponse brute de l'API (pour debug)
+  final String? rawResponse;
+
+  /// Indique si c'est une analyse de fallback
+  final bool isFallback;
+
+  /// Timestamp de l'analyse
+  final String timestamp;
+
+  /// ID de la session d'analyse
+  String? analysisSessionId;
+
+  /// Confiance de l'analyse (0.0 - 1.0)
+  double confidence = 0.0;
+
+  /// Constructeur
+  AIAnalysisResult({
+    required this.photoId,
+    required this.description,
+    required this.tags,
+    required this.categories,
+    required this.qualityScore,
+    required this.dominantColors,
+    required this.objectsDetected,
+    required this.mood,
+    required this.style,
+    required this.technicalNotes,
+    this.rawResponse,
+    this.isFallback = false,
+    required this.timestamp,
+    this.analysisSessionId,
+    this.confidence = 0.0,
+  });
+
+  /// Constructeur depuis JSON
+  factory AIAnalysisResult.fromJson(Map<String, dynamic> json) {
+    return AIAnalysisResult(
+      photoId: json['photo_id'] as String? ?? json['photoId'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      tags: (json['tags'] as List<dynamic>? ?? [])
+          .whereType<String>
+          .toList(),
+      categories: (json['categories'] as List<dynamic>? ?? [])
+          .whereType<String>
+          .toList(),
+      qualityScore: json['quality_score'] as int? ?? json['qualityScore'] as int? ?? 5,
+      dominantColors: (json['dominant_colors'] as List<dynamic>? ?? 
+          json['dominantColors'] as List<dynamic>? ?? [])
+          .whereType<String>
+          .toList(),
+      objectsDetected: (json['objects_detected'] as List<dynamic>? ?? 
+          json['objectsDetected'] as List<dynamic>? ?? [])
+          .whereType<String>
+          .toList(),
+      mood: json['mood'] as String? ?? '',
+      style: json['style'] as String? ?? '',
+      technicalNotes: (json['technical_notes'] as Map<String, dynamic>? ?? 
+          json['technicalNotes'] as Map<String, dynamic>? ?? {})
+          .map((key, value) => MapEntry(key, value.toString())),
+      rawResponse: json['raw_response'] as String? ?? json['rawResponse'] as String?,
+      isFallback: json['is_fallback'] as bool? ?? json['isFallback'] as bool? ?? false,
+      timestamp: json['timestamp'] as String? ?? DateTime.now().toIso8601String(),
+      analysisSessionId: json['analysis_session_id'] as String? ?? 
+          json['analysisSessionId'] as String?,
+      confidence: (json['confidence'] as num? ?? 0.0).toDouble(),
+    );
+  }
+
+  /// Convertit en JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'photo_id': photoId,
+      'description': description,
+      'tags': tags,
+      'categories': categories,
+      'quality_score': qualityScore,
+      'dominant_colors': dominantColors,
+      'objects_detected': objectsDetected,
+      'mood': mood,
+      'style': style,
+      'technical_notes': technicalNotes,
+      'raw_response': rawResponse,
+      'is_fallback': isFallback,
+      'timestamp': timestamp,
+      'analysis_session_id': analysisSessionId,
+      'confidence': confidence,
+    };
+  }
+  }
+  */
+
+  /// Copie avec modifications
+  AIAnalysisResult copyWith({
+    String? photoId,
+    String? description,
+    List<String>? tags,
+    List<String>? categories,
+    int? qualityScore,
+    List<String>? dominantColors,
+    List<String>? objectsDetected,
+    String? mood,
+    String? style,
+    Map<String, String>? technicalNotes,
+    String? rawResponse,
+    bool? isFallback,
+    String? timestamp,
+    String? analysisSessionId,
+    double? confidence,
+  }) {
+    return AIAnalysisResult(
+      photoId: photoId ?? this.photoId,
+      description: description ?? this.description,
+      tags: tags ?? this.tags,
+      categories: categories ?? this.categories,
+      qualityScore: qualityScore ?? this.qualityScore,
+      dominantColors: dominantColors ?? this.dominantColors,
+      objectsDetected: objectsDetected ?? this.objectsDetected,
+      mood: mood ?? this.mood,
+      style: style ?? this.style,
+      technicalNotes: technicalNotes ?? this.technicalNotes,
+      rawResponse: rawResponse ?? this.rawResponse,
+      isFallback: isFallback ?? this.isFallback,
+      timestamp: timestamp ?? this.timestamp,
+      analysisSessionId: analysisSessionId ?? this.analysisSessionId,
+      confidence: confidence ?? this.confidence,
+    );
+  }
+
+  /// Vérifie si l'analyse est complète
+  bool get isComplete => 
+      description.isNotEmpty && 
+      tags.isNotEmpty && 
+      categories.isNotEmpty &&
+      qualityScore > 0;
+
+  /// Obtient tous les tags (tags + catégories + objets détectés)
+  List<String> get allTags {
+    final all = <String>[];
+    all.addAll(tags);
+    all.addAll(categories);
+    all.addAll(objectsDetected);
+    if (mood.isNotEmpty) all.add(mood);
+    if (style.isNotEmpty) all.add(style);
+    return all.toSet().where((t) => t.isNotEmpty).toList();
+  }
+
+  /// Obtient une description formatée pour l'affichage
+  String get formattedDescription {
+    if (description.isEmpty) {
+      return 'Aucune description disponible';
+    }
+    return description;
+  }
+
+  @override
+  String toString() {
+    return 'AIAnalysisResult(photoId: $photoId, quality: $qualityScore, tags: ${tags.length}, categories: ${categories.length})';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is AIAnalysisResult && other.photoId == photoId;
+  }
+
+  @override
+  int get hashCode => photoId.hashCode;
+}
+
+/// Extension pour lister les résultats d'analyse
+class AIAnalysisResultList {
+  final List<AIAnalysisResult> results;
+
+  AIAnalysisResultList(this.results);
+
+  /// Filtre par photo ID
+  AIAnalysisResult? findByPhotoId(String photoId) {
+    try {
+      return results.firstWhere((r) => r.photoId == photoId);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Filtre par tag
+  List<AIAnalysisResult> filterByTag(String tag) {
+    return results.where((r) => r.allTags.contains(tag)).toList();
+  }
+
+  /// Filtre par catégorie
+  List<AIAnalysisResult> filterByCategory(String category) {
+    return results.where((r) => r.categories.contains(category)).toList();
+  }
+
+  /// Trie par score de qualité
+  List<AIAnalysisResult> sortByQuality({bool descending = true}) {
+    final sorted = [...results];
+    sorted.sort((a, b) => descending 
+        ? b.qualityScore.compareTo(a.qualityScore)
+        : a.qualityScore.compareTo(b.qualityScore));
+    return sorted;
+  }
+
+  /// Obtient les tags uniques
+  Set<String> get allUniqueTags {
+    final tags = <String>{};
+    for (final result in results) {
+      tags.addAll(result.allTags);
+    }
+    return tags;
+  }
+
+  /// Obtient les catégories uniques
+  Set<String> get allUniqueCategories {
+    final categories = <String>{};
+    for (final result in results) {
+      categories.addAll(result.categories);
+    }
+    return categories;
+  }
+}
