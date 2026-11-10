@@ -1,0 +1,33 @@
+# Glossary
+
+- **AI agent**: optional assistant that understands a written request and proposes a plan to confirm.
+- **AI provider**: service running the AI model (Mistral, OpenAI, Anthropic, Gemini, Ollama).
+- **Album**: group of media in the app's library (does not exist on GitHub).
+- **Active repository**: the repository suggested by default for publishing.
+- **API**: the entry point through which a program talks to a service (here GitHub or an AI provider).
+- **API key**: secret identifier allowing the app to use an AI service.
+- **Branch**: line of versions in a repository; the main one is often called `main`.
+- **Commit**: record of a set of changes in a repository, with a message, an author and a date.
+- **Commit message**: sentence describing a publication.
+- **Conflict**: the repository changed between the analysis and the publication; the app stops rather than overwrite.
+- **Device Flow**: GitHub sign-in by typing a code in the browser.
+- **EXIF**: information stored in a photo (date, camera, GPS position…).
+- **Fine-grained (token)**: GitHub token limited to specific repositories and permissions.
+- **Git**: software that manages file versions; GitHub hosts it online.
+- **GitHub**: website hosting Git repositories.
+- **Git LFS**: Git extension for large files, stored separately.
+- **`.gitattributes`**: repository file that says, among other things, which files go through Git LFS.
+- **Hash (SHA)**: code computed from a file's content; two identical files have the same one.
+- **Keychain**: the system's safe for passwords (Keystore, GNOME Keyring, KWallet).
+- **LFS pointer**: small text file placed in the repository instead of a large file.
+- **Metadata**: information about a file (name, size, date, camera, position…).
+- **Model**: the AI program itself (for example `mistral-small-latest`).
+- **Ollama**: software to run an AI model on your own computer.
+- **Plan**: list of steps proposed by the agent, run only after your confirmation.
+- **Private / public**: a repository's visibility (you and your invitees / everyone).
+- **Push**: sending commits to GitHub.
+- **Queue**: list of confirmed publications, run one at a time.
+- **README**: presentation file shown on a repository's home page.
+- **Repository**: online folder on GitHub keeping the files and their whole history.
+- **Token**: limited, revocable password allowing the app to act on your repositories.
+- **Version**: copy of a media item created by the app (optimized, converted); the original stays intact.

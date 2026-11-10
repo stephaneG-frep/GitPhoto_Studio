@@ -4,9 +4,19 @@ Application Flutter (Android ARM64, Linux `.deb`) pour organiser, optimiser et
 publier photos et vidéos dans des dépôts GitHub sans manipuler Git, avec un
 mode classique et un agent IA (Mistral en priorité) à exécution contrôlée.
 
-Cahier des charges : [SPEC.md](SPEC.md). État d'avancement : **phase 6 —
-agent IA** (voir [docs/RAPPORT_PHASE6.md](docs/RAPPORT_PHASE6.md) et
+Cahier des charges : [SPEC.md](SPEC.md). État d'avancement : **phase 8 —
+qualité** (voir [docs/RAPPORT_PHASE8.md](docs/RAPPORT_PHASE8.md) et
 [docs/LIMITATIONS.md](docs/LIMITATIONS.md)).
+
+## Documentation
+
+- Mode d'emploi intégré à l'application (écran « Mode d'emploi »), aussi en
+  fichier : [docs/MODE_EMPLOI.md](docs/MODE_EMPLOI.md)
+- [Guide d'installation](docs/GUIDE_INSTALLATION.md),
+  [configuration GitHub](docs/GUIDE_GITHUB.md),
+  [fournisseurs IA](docs/GUIDE_IA.md)
+- Les guides sont générés depuis `assets/help/fr/` :
+  `python3 scripts/generate_guides.py`
 
 ## Prérequis
 
@@ -24,6 +34,9 @@ flutter test integration_test/app_test.dart -d linux      # un fichier à la foi
 flutter test integration_test/gallery_test.dart -d linux
 # Test réel Mistral (clé dans ~/.config/gitphoto/mistral_key, droits 600) :
 flutter test integration_test/mistral_real_test.dart -d linux
+# Parcours complets réels (GitHub + Mistral) sur un dépôt de test :
+flutter test integration_test/full_journey_real_test.dart -d linux \
+  --dart-define=GITPHOTO_TEST_REPO=proprietaire/depot-de-test
 flutter run -d linux
 flutter build linux --release
 flutter build apk --release --target-platform android-arm64

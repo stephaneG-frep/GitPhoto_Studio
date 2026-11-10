@@ -303,8 +303,7 @@ class _StepTile extends StatelessWidget {
           l10n.stepAlreadyPublished,
         if (r.renamed > 0) l10n.stepRenamed(r.renamed),
         if (r.publishResult case final p?) ...[
-          '${p.commitSha.substring(0, 7)} — '
-              '${p.verified ? l10n.stepVerified : l10n.stepNotVerified}',
+          '${p.commitSha.substring(0, 7)} — ${p.verified ? l10n.stepVerified : l10n.stepNotVerified}',
         ],
         ...r.failures,
       ],

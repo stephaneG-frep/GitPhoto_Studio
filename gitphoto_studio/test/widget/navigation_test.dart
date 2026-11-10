@@ -104,6 +104,6 @@ void main() {
     );
     await tester.tap(find.widgetWithText(ActionChip, 'Mode d\'emploi'));
     await tester.pumpAndSettle();
-    expect(find.text('Prévu en phase 7 — Documentation'), findsOneWidget);
+    expect(find.text('Parcours guidé'), findsOneWidget);
   });
 }

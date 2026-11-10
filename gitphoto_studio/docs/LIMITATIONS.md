@@ -1,5 +1,21 @@
 # Limitations connues
 
+## Après la phase 8
+
+- Le modèle d'IA peut encore, rarement, répondre en texte au lieu de
+  proposer un plan : l'application le lui rappelle une fois, puis affiche
+  sa réponse telle quelle (aucune action n'est alors possible sans plan).
+- Le fichier `android/build/reports/problems/problems-report.html` reste
+  dans le dépôt GitHub du projet tant que le propriétaire ne l'a pas
+  retiré (ignoré pour l'avenir).
+- `desktop_drop` 0.9 (version majeure) non adoptée.
+
+## Après la phase 7
+
+- Mode d'emploi en français et en anglais seulement, sans captures d'écran.
+- Journal technique limité à la session en cours.
+- `.deb`, signature de livraison et ZIP : phase 9.
+
 ## Après la phase 6
 
 - Dialogue réel vérifié avec Mistral (`mistral-small-latest`) sous Linux ;

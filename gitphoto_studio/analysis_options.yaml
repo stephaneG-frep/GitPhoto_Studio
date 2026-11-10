@@ -14,6 +14,7 @@ analyzer:
   language:
     strict-casts: true
     strict-raw-types: true
+    strict-inference: true
 
 linter:
   rules:
@@ -21,3 +22,19 @@ linter:
     - avoid_print
     - prefer_final_locals
     - require_trailing_commas
+    # Phase 8 : règles qui signalent de vrais défauts.
+    - unawaited_futures
+    - avoid_dynamic_calls
+    - cancel_subscriptions
+    - close_sinks
+    - throw_in_finally
+    - unnecessary_statements
+    - literal_only_boolean_expressions
+    - only_throw_errors
+    - avoid_type_to_string
+    - test_types_in_equals
+    - no_adjacent_strings_in_list
+    - unnecessary_await_in_return
+    - avoid_void_async
+    - use_build_context_synchronously
+    - avoid_catching_errors

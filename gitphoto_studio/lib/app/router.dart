@@ -52,6 +52,13 @@ GoRouter createRouter({String initialLocation = '/'}) {
               ),
             ),
           GoRoute(
+            path: '/help/:topic',
+            pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey,
+              child: HelpTopicScreen(topicId: state.pathParameters['topic']!),
+            ),
+          ),
+          GoRoute(
             path: '/editor/:id',
             pageBuilder: (context, state) => NoTransitionPage(
               key: state.pageKey,

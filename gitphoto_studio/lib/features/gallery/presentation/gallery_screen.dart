@@ -424,7 +424,8 @@ class _FilterRow extends ConsumerWidget {
               PopupMenuItem(value: s, child: Text(sortLabel(s))),
           ],
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+            // 12 + 24 + 12 : cible tactile de 48 px (accessibilité).
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

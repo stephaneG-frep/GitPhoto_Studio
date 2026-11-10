@@ -282,9 +282,8 @@ class _ImageSectionState extends ConsumerState<_ImageSection> {
   PreviewResult? _preview;
   bool _busy = false;
   Object? _error;
-  late final MediaVersionService _service = ref.read(
-    mediaVersionServiceProvider,
-  );
+  // Lu dans initState : `ref` n'est plus utilisable dans dispose().
+  late final MediaVersionService _service;
 
   ImageOptimizeOptions get _options =>
       (_preset == ImagePreset.custom ? _custom : imagePresets[_preset]!)
@@ -300,7 +299,7 @@ class _ImageSectionState extends ConsumerState<_ImageSection> {
   @override
   void initState() {
     super.initState();
-    _service; // Résolu tant que `ref` est utilisable.
+    _service = ref.read(mediaVersionServiceProvider);
   }
 
   @override

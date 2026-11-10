@@ -134,8 +134,7 @@ const List<Migration> migrations = [
   // Phase 4 : versions optimisées, empreinte visuelle, albums.
   Migration(3, [
     // Version dérivée (optimisée, convertie…) d'un autre média.
-    'ALTER TABLE media ADD COLUMN derived_from INTEGER '
-        'REFERENCES media(id) ON DELETE SET NULL',
+    'ALTER TABLE media ADD COLUMN derived_from INTEGER REFERENCES media(id) ON DELETE SET NULL',
     // Empreinte visuelle (dHash 64 bits, hexadécimal) : doublons probables.
     'ALTER TABLE media ADD COLUMN phash TEXT',
     'CREATE INDEX idx_media_album ON media(album_id)',

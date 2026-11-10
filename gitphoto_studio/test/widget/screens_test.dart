@@ -11,7 +11,6 @@ import 'package:gitphoto_studio/core/database/migrations.dart';
 import 'package:gitphoto_studio/core/database/preferences_repository.dart';
 import 'package:gitphoto_studio/core/platform/tool_probe.dart';
 import 'package:gitphoto_studio/features/github/application/github_session.dart';
-import 'package:gitphoto_studio/shared/widgets/planned_feature_screen.dart';
 
 import '../support/fake_secret_store.dart';
 import 'test_app.dart';
@@ -40,7 +39,10 @@ void main() {
 
     await pumpStudio(tester, size: desktopSize, database: db);
 
-    expect(find.text('alice/portfolio'), findsOneWidget);
+    expect(
+      find.textContaining('alice/portfolio', findRichText: true),
+      findsOneWidget,
+    );
     expect(
       find.ancestor(of: find.text('3'), matching: find.byType(Card)),
       findsOneWidget,
@@ -53,30 +55,24 @@ void main() {
 
   testWidgets('tableau de bord vide : aucun dépôt connecté', (tester) async {
     await pumpStudio(tester, size: desktopSize);
-    expect(find.text('Aucun dépôt connecté'), findsOneWidget);
+    expect(
+      find.textContaining('Aucun dépôt connecté', findRichText: true),
+      findsOneWidget,
+    );
   });
 
-  testWidgets('les écrans en préparation ne proposent aucun bouton', (
+  testWidgets('plus aucun écran « en préparation » : les neuf sont réels', (
     tester,
   ) async {
-    final planned = AppDestination.values.where(
-      (d) => const {AppDestination.help}.contains(d),
-    );
-    for (final d in planned) {
+    for (final d in AppDestination.values) {
       await pumpStudio(tester, size: desktopSize, location: d.path);
-      final screen = find.byType(PlannedFeatureScreen);
-      expect(screen, findsOneWidget, reason: d.path);
-      for (final type in [
-        ButtonStyleButton,
-        IconButton,
-        FloatingActionButton,
-      ]) {
-        expect(
-          find.descendant(of: screen, matching: find.byType(type)),
-          findsNothing,
-          reason: '${d.path} contient un $type',
-        );
-      }
+      expect(find.text('En préparation'), findsNothing, reason: d.path);
+      expect(
+        find.textContaining('Prévu en phase'),
+        findsNothing,
+        reason: d.path,
+      );
+      expect(tester.takeException(), isNull, reason: d.path);
     }
   });
 

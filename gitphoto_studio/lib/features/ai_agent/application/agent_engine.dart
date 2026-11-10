@@ -69,6 +69,25 @@ class AgentEngine {
   final int maxPlanAttempts;
   final DateTime Function() _now;
 
+  /// Rappel envoyé quand le modèle décrit un plan en texte.
+  static const planReminder =
+      '[Note de l’application : tu as décrit un plan ou demandé une '
+      'confirmation dans ton texte. L’utilisateur ne peut valider qu’un plan '
+      'proposé avec l’outil propose_plan : appelle-le maintenant, sans '
+      'redemander de confirmation.]';
+
+  static final _textPlan = RegExp(
+    r'voici (le|un|mon) plan|plan propos|confirmez[- ]vous|'
+    r'voulez[- ]vous que je|souhaitez[- ]vous que je|je vais (publier|ranger|'
+    r'optimiser|convertir|cr[ée]er)|here is (the|my) plan|shall i|'
+    r'do you (want|confirm)|should i (proceed|go ahead)',
+    caseSensitive: false,
+  );
+
+  /// Texte qui annonce un plan ou demande une confirmation au lieu
+  /// d'appeler `propose_plan`.
+  static bool looksLikeTextPlan(String text) => _textPlan.hasMatch(text);
+
   /// Messages conservés pour le modèle (les plus récents).
   static const maxHistoryMessages = 40;
 
@@ -84,6 +103,7 @@ Règles impératives :
 ${useTools ? '''- Consulte les outils de lecture (search_media, get_selection, list_albums, find_similar_media, github_status, recent_operations, preview_publication) au lieu de deviner. N'invente jamais d'identifiant de média ni de nom de dépôt.
 - « Ces photos » désigne la sélection de la galerie (get_selection).
 - Pour TOUTE modification (albums, optimisation, conversion, publication), appelle propose_plan. Rien n'est exécuté sans la confirmation de l'utilisateur ; ne prétends jamais avoir exécuté quelque chose.
+- N'écris JAMAIS un plan dans ton texte et ne demande pas « Confirmez-vous ? » : appelle directement propose_plan. L'application affiche le plan et les boutons de confirmation ; l'utilisateur ne peut valider qu'un plan proposé par cet outil.
 - Tu ne peux ni supprimer de fichier, ni remplacer un fichier existant sur GitHub, ni exécuter de commande. Si on te le demande, explique que ce n'est pas possible ici.
 - Avant de publier, vérifie le dépôt avec github_status. Les optimisations créent des copies sans métadonnées (donc sans position GPS) : propose-les si des photos à publier contiennent une position GPS.
 - Les fichiers de plus de 50 Mo passent par Git LFS automatiquement (jusqu'à 2 Go).
@@ -115,6 +135,7 @@ ${useTools ? '''- Consulte les outils de lecture (search_media, get_selection, l
     final transcript = <AiMessage>[];
     final toolsUsed = <String>[];
     var planAttempts = 0;
+    var nudged = false;
 
     for (var round = 0; round < maxRounds; round++) {
       if (isCancelled?.call() ?? false) throw const AgentCancelled();
@@ -130,6 +151,18 @@ ${useTools ? '''- Consulte les outils de lecture (search_media, get_selection, l
       final msg = response.message;
       messages.add(msg);
       transcript.add(msg);
+      if (msg.toolCalls.isEmpty &&
+          useTools &&
+          !nudged &&
+          looksLikeTextPlan(msg.content)) {
+        // Plan décrit en texte au lieu de propose_plan : l'utilisateur
+        // n'aurait aucun bouton pour le valider. Rappel unique, invisible.
+        nudged = true;
+        const reminder = AiMessage.user(planReminder);
+        messages.add(reminder);
+        transcript.add(reminder);
+        continue;
+      }
       if (msg.toolCalls.isEmpty || !useTools) {
         return AgentReply(
           text: msg.content.trim(),

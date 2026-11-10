@@ -88,7 +88,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'Fournisseur prioritaire : Mistral (autres fournisseurs configurables)\nOutils typés et validés, aucun accès shell libre\nPlan d\'action présenté avant exécution\nConfirmation obligatoire\nAucun média envoyé à une IA sans votre accord';
 
   @override
-  String get helpIntro => 'Documentation intégrée, consultable hors ligne.';
+  String get helpIntro =>
+      'Mode d\'emploi complet, consultable hors ligne. Suivez le parcours guidé ou cherchez une question.';
 
   @override
   String get helpFeatures =>
@@ -772,7 +773,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pubEmptyRepoNote =>
-      'Dépôt vide : les fichiers seront publiés un par un (un commit par fichier), sur la branche par défaut.';
+      'Dépôt vide : un premier commit l\'initialise avec un fichier, puis un second regroupe tous les autres, sur la branche par défaut.';
 
   @override
   String get pubAnalyze => 'Analyser';
@@ -818,7 +819,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pubOptimizationNote =>
-      'Optimisation des images avant publication : disponible en phase 4.';
+      'Astuce : optimisez d\'abord vos images (Galerie › Optimiser) pour publier des copies plus légères et sans position GPS.';
 
   @override
   String pubSummaryCounts(int upload, String size, int skipped, int blocked) {
@@ -1858,4 +1859,159 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get aiCapabilities =>
       'Conversation et appels d\'outils. Vision non utilisée : aucun média n\'est envoyé.';
+
+  @override
+  String get helpSearchHint =>
+      'Rechercher dans le mode d\'emploi (ex. : jeton, LFS, erreur 404)';
+
+  @override
+  String get helpNoResults =>
+      'Aucune rubrique ne correspond à cette recherche.';
+
+  @override
+  String get helpTopics => 'Rubriques';
+
+  @override
+  String get helpContents => 'Sommaire';
+
+  @override
+  String get helpNextTopic => 'Rubrique suivante';
+
+  @override
+  String get helpUnknownTopic => 'Rubrique introuvable.';
+
+  @override
+  String get helpContextual => 'Aide sur cet écran';
+
+  @override
+  String get commonClear => 'Effacer';
+
+  @override
+  String get tourTitle => 'Parcours guidé';
+
+  @override
+  String get tourIntro =>
+      'Les étapes se cochent toutes seules dès que vous les avez réalisées.';
+
+  @override
+  String tourProgress(int done, int total) {
+    return '$done sur $total';
+  }
+
+  @override
+  String get tourDone => 'Bravo : vous savez publier vos médias sur GitHub !';
+
+  @override
+  String get tourOptional => 'facultatif';
+
+  @override
+  String get tourStepDone => 'Étape faite';
+
+  @override
+  String get tourStepTodo => 'Étape à faire';
+
+  @override
+  String get tourGo => 'Y aller';
+
+  @override
+  String get tourRead => 'Lire l\'aide';
+
+  @override
+  String get tourImportTitle => 'Importer une photo';
+
+  @override
+  String get tourImportBody =>
+      'Galerie › Importer. Vos fichiers d\'origine ne sont jamais modifiés.';
+
+  @override
+  String get tourGithubTitle => 'Se connecter à GitHub';
+
+  @override
+  String get tourGithubBody =>
+      'Avec un jeton limité à vos dépôts de photos, gardé dans le trousseau du système.';
+
+  @override
+  String get tourRepoTitle => 'Choisir un dépôt actif';
+
+  @override
+  String get tourRepoBody =>
+      'Créez un dépôt (privé de préférence) ou choisissez-en un existant.';
+
+  @override
+  String get tourOptimizeTitle => 'Alléger les photos';
+
+  @override
+  String get tourOptimizeBody =>
+      'Des copies plus légères et sans position GPS ; les originaux restent intacts.';
+
+  @override
+  String get tourPublishTitle => 'Publier';
+
+  @override
+  String get tourPublishBody =>
+      'L\'assistant montre exactement ce qui sera envoyé avant de publier.';
+
+  @override
+  String get tourHistoryTitle => 'Consulter l\'historique';
+
+  @override
+  String get tourHistoryBody =>
+      'Chaque publication y figure avec son commit et un lien vers GitHub.';
+
+  @override
+  String get tourAiTitle => 'Essayer l\'agent IA';
+
+  @override
+  String get tourAiBody =>
+      'Désactivé par défaut. Il propose des plans que vous confirmez.';
+
+  @override
+  String get diagLog => 'Journal technique';
+
+  @override
+  String get diagLogHelp =>
+      'Événements récents de cette session (secrets masqués). Effacé à la fermeture.';
+
+  @override
+  String get diagLogEmpty => 'Aucun événement pour l\'instant.';
+
+  @override
+  String get diagLogCopy => 'Copier le journal';
+
+  @override
+  String get diagReport => 'Rapport de diagnostic';
+
+  @override
+  String get diagReportHelp =>
+      'Version, plateforme, outils et compteurs. Sans jeton, clé, nom de compte, nom de dépôt ni nom de fichier : vous pouvez le joindre à une demande d\'aide.';
+
+  @override
+  String get diagReportCopy => 'Copier le rapport';
+
+  @override
+  String get diagCopied => 'Copié dans le presse-papiers.';
+
+  @override
+  String get settingsExport => 'Exporter les paramètres';
+
+  @override
+  String get settingsExportHelp =>
+      'Préférences non sensibles au format JSON (thème, langue, publication, choix de l\'IA). Aucun jeton ni aucune clé.';
+
+  @override
+  String get settingsExportCopy => 'Copier';
+
+  @override
+  String get settingsExportSave => 'Enregistrer dans un fichier…';
+
+  @override
+  String settingsExportSaved(String path) {
+    return 'Paramètres enregistrés : $path';
+  }
+
+  @override
+  String get commonShow => 'Afficher le jeton';
+
+  @override
+  String get commonHide => 'Masquer le jeton';
 }

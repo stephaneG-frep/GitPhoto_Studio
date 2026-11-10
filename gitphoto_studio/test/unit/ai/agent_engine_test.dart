@@ -67,7 +67,7 @@ void main() {
     expect(firstReq.messages.first.content, contains('2026-11-09'));
     final sel = jsonDecode(p.requests[1].messages.last.content) as Map;
     expect(sel['count'], 2);
-    expect((sel['items'] as List).first['gps'], isTrue);
+    expect(((sel['items'] as List).first as Map)['gps'], isTrue);
 
     // L'échange se termine par un message de l'assistant (contrainte Mistral).
     expect(reply.transcript.last.role, AiRole.assistant);
@@ -138,6 +138,46 @@ void main() {
       expect(env.actions, isEmpty);
     },
   );
+
+  test('plan décrit en texte : rappel unique, puis vrai plan', () async {
+    final p = ScriptedProvider([
+      says('Voici le plan : 1. Ranger la photo. Confirmez-vous ?'),
+      calls(AgentToolNames.proposePlan, {
+        'summary': 'Ranger',
+        'steps': [
+          {
+            'type': 'move_to_album',
+            'media_ids': [1],
+            'album': 'A',
+          },
+        ],
+      }),
+    ]);
+    final reply = await engine(p).respond([const AiMessage.user('Range-la')]);
+    expect(reply.plan, isNotNull);
+    expect(p.requests[1].messages.last.content, AgentEngine.planReminder);
+    expect(env.actions, isEmpty);
+  });
+
+  test('rappel une seule fois : sinon le texte est rendu tel quel', () async {
+    final p = ScriptedProvider([
+      says('Voulez-vous que je publie ?'),
+      says('Confirmez-vous ?'),
+    ]);
+    final reply = await engine(p).respond([const AiMessage.user('x')]);
+    expect(reply.text, 'Confirmez-vous ?');
+    expect(reply.plan, isNull);
+    expect(p.requests, hasLength(2));
+  });
+
+  test('réponse ordinaire : aucun rappel', () async {
+    final p = ScriptedProvider([says('Vous avez 3 photos.')]);
+    final reply = await engine(p).respond([const AiMessage.user('Combien ?')]);
+    expect(reply.text, 'Vous avez 3 photos.');
+    expect(p.requests, hasLength(1));
+    expect(AgentEngine.looksLikeTextPlan('Here is the plan: …'), isTrue);
+    expect(AgentEngine.looksLikeTextPlan('Il y a 1 vidéo.'), isFalse);
+  });
 
   test('boucle sans fin : arrêtée au nombre maximal d’étapes', () async {
     final p = ScriptedProvider([
@@ -259,7 +299,7 @@ void main() {
     test('résultat trop long : tronqué avec consigne', () {
       final s = AgentToolbox.encodeResult({'x': 'a' * 20000});
       expect(s.length, lessThan(AgentToolbox.maxResultChars + 200));
-      expect(jsonDecode(s)['truncated'], true);
+      expect((jsonDecode(s) as Map)['truncated'], true);
     });
 
     test('secrets éventuels expurgés des résultats', () {

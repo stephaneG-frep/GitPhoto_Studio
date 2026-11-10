@@ -80,22 +80,13 @@ class LfsClient {
             'Accept': _mediaType,
             'Content-Type': _mediaType,
           },
-          responseType: ResponseType.plain,
+          // Octets bruts : décodés ici, pour garder le code HTTP même si le
+          // corps annoncé JSON est illisible.
+          responseType: ResponseType.bytes,
         ),
       );
       final status = r.statusCode ?? 0;
-      // Dio décode lui-même les réponses « +json » ; sinon, texte brut.
-      Map<String, Object?> body = const {};
-      final data = r.data;
-      if (data is Map) {
-        body = data.cast<String, Object?>();
-      } else if (data is String && data.isNotEmpty) {
-        try {
-          body = (jsonDecode(data) as Map).cast<String, Object?>();
-        } on FormatException {
-          body = const {};
-        }
-      }
+      final body = _decode(r.data);
       if (status >= 200 && status < 300) return body;
       final message = body['message'] as String? ?? 'HTTP $status';
       throw GithubException(
@@ -113,8 +104,33 @@ class LfsClient {
         statusCode: status,
       );
     } on DioException catch (e) {
-      throw GithubException(GithubErrorKind.network, e.message ?? e.type.name);
+      throw _dioError(e);
     }
+  }
+
+  static Map<String, Object?> _decode(Object? data) {
+    if (data is! List<int> || data.isEmpty) return const {};
+    try {
+      final v = jsonDecode(utf8.decode(data, allowMalformed: true));
+      return v is Map ? v.cast<String, Object?>() : const {};
+    } on FormatException {
+      return const {};
+    }
+  }
+
+  /// Une réponse déclarée JSON mais illisible n'est pas une panne réseau.
+  static GithubException _dioError(DioException e) {
+    final status = e.response?.statusCode;
+    if (e.error is FormatException) {
+      return GithubException(
+        status != null && status >= 500
+            ? GithubErrorKind.server
+            : GithubErrorKind.unknown,
+        'Git LFS : réponse illisible${status == null ? '' : ' (HTTP $status)'}',
+        statusCode: status,
+      );
+    }
+    return GithubException(GithubErrorKind.network, e.message ?? e.type.name);
   }
 
   static Map<String, Object?> _objectResult(
@@ -168,6 +184,7 @@ class LfsClient {
             headers: headers,
             sendTimeout: null,
             receiveTimeout: const Duration(minutes: 5),
+            responseType: ResponseType.bytes,
           ),
           onSendProgress: onProgress,
           cancelToken: cancelToken,
@@ -182,10 +199,7 @@ class LfsClient {
         }
       } on DioException catch (e) {
         if (CancelToken.isCancel(e)) rethrow;
-        throw GithubException(
-          GithubErrorKind.network,
-          e.message ?? e.type.name,
-        );
+        throw _dioError(e);
       }
     }
 
@@ -201,6 +215,7 @@ class LfsClient {
               'Accept': _mediaType,
               'Content-Type': _mediaType,
             },
+            responseType: ResponseType.bytes,
           ),
         );
         final status = r.statusCode ?? 0;
@@ -212,10 +227,7 @@ class LfsClient {
           );
         }
       } on DioException catch (e) {
-        throw GithubException(
-          GithubErrorKind.network,
-          e.message ?? e.type.name,
-        );
+        throw _dioError(e);
       }
     }
     return true;

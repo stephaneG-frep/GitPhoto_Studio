@@ -236,6 +236,7 @@ class _ConnectSectionState extends ConsumerState<_ConnectSection> {
                     labelText: l10n.ghPatField,
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
+                      tooltip: _obscure ? l10n.commonShow : l10n.commonHide,
                       onPressed: () => setState(() => _obscure = !_obscure),
                       icon: Icon(
                         _obscure ? Icons.visibility : Icons.visibility_off,

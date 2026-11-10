@@ -88,7 +88,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Preferred provider: Mistral (other providers configurable)\nTyped, validated tools, no free shell access\nAction plan shown before execution\nMandatory confirmation\nNo media sent to an AI without your consent';
 
   @override
-  String get helpIntro => 'Built-in documentation, available offline.';
+  String get helpIntro =>
+      'Complete user guide, available offline. Follow the guided tour or search for a question.';
 
   @override
   String get helpFeatures =>
@@ -768,7 +769,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pubEmptyRepoNote =>
-      'Empty repository: files will be published one by one (one commit per file), on the default branch.';
+      'Empty repository: a first commit initializes it with one file, then a second one groups all the others, on the default branch.';
 
   @override
   String get pubAnalyze => 'Analyze';
@@ -813,7 +814,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pubOptimizationNote =>
-      'Image optimization before publishing: available in phase 4.';
+      'Tip: optimize your images first (Gallery › Optimize) to publish lighter copies without GPS position.';
 
   @override
   String pubSummaryCounts(int upload, String size, int skipped, int blocked) {
@@ -1851,4 +1852,158 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get aiCapabilities =>
       'Chat and tool calls. Vision unused: no media is sent.';
+
+  @override
+  String get helpSearchHint => 'Search the guide (e.g. token, LFS, error 404)';
+
+  @override
+  String get helpNoResults => 'No section matches this search.';
+
+  @override
+  String get helpTopics => 'Sections';
+
+  @override
+  String get helpContents => 'Contents';
+
+  @override
+  String get helpNextTopic => 'Next section';
+
+  @override
+  String get helpUnknownTopic => 'Section not found.';
+
+  @override
+  String get helpContextual => 'Help for this screen';
+
+  @override
+  String get commonClear => 'Clear';
+
+  @override
+  String get tourTitle => 'Guided tour';
+
+  @override
+  String get tourIntro =>
+      'Steps tick themselves as soon as you have done them.';
+
+  @override
+  String tourProgress(int done, int total) {
+    return '$done of $total';
+  }
+
+  @override
+  String get tourDone =>
+      'Well done: you know how to publish your media to GitHub!';
+
+  @override
+  String get tourOptional => 'optional';
+
+  @override
+  String get tourStepDone => 'Step done';
+
+  @override
+  String get tourStepTodo => 'Step to do';
+
+  @override
+  String get tourGo => 'Go there';
+
+  @override
+  String get tourRead => 'Read the help';
+
+  @override
+  String get tourImportTitle => 'Import a photo';
+
+  @override
+  String get tourImportBody =>
+      'Gallery › Import. Your original files are never changed.';
+
+  @override
+  String get tourGithubTitle => 'Sign in to GitHub';
+
+  @override
+  String get tourGithubBody =>
+      'With a token limited to your photo repositories, kept in the system keychain.';
+
+  @override
+  String get tourRepoTitle => 'Choose an active repository';
+
+  @override
+  String get tourRepoBody =>
+      'Create a repository (preferably private) or pick an existing one.';
+
+  @override
+  String get tourOptimizeTitle => 'Lighten the photos';
+
+  @override
+  String get tourOptimizeBody =>
+      'Lighter copies without GPS position; originals stay intact.';
+
+  @override
+  String get tourPublishTitle => 'Publish';
+
+  @override
+  String get tourPublishBody =>
+      'The wizard shows exactly what will be sent before publishing.';
+
+  @override
+  String get tourHistoryTitle => 'Check the history';
+
+  @override
+  String get tourHistoryBody =>
+      'Each publication is listed with its commit and a link to GitHub.';
+
+  @override
+  String get tourAiTitle => 'Try the AI agent';
+
+  @override
+  String get tourAiBody =>
+      'Off by default. It proposes plans that you confirm.';
+
+  @override
+  String get diagLog => 'Technical log';
+
+  @override
+  String get diagLogHelp =>
+      'Recent events of this session (secrets masked). Cleared on exit.';
+
+  @override
+  String get diagLogEmpty => 'No event yet.';
+
+  @override
+  String get diagLogCopy => 'Copy the log';
+
+  @override
+  String get diagReport => 'Diagnostic report';
+
+  @override
+  String get diagReportHelp =>
+      'Version, platform, tools and counters. No token, key, account name, repository name or file name: you can attach it to a help request.';
+
+  @override
+  String get diagReportCopy => 'Copy the report';
+
+  @override
+  String get diagCopied => 'Copied to the clipboard.';
+
+  @override
+  String get settingsExport => 'Export settings';
+
+  @override
+  String get settingsExportHelp =>
+      'Non-sensitive preferences as JSON (theme, language, publishing, AI choices). No token or key.';
+
+  @override
+  String get settingsExportCopy => 'Copy';
+
+  @override
+  String get settingsExportSave => 'Save to a file…';
+
+  @override
+  String settingsExportSaved(String path) {
+    return 'Settings saved: $path';
+  }
+
+  @override
+  String get commonShow => 'Show the token';
+
+  @override
+  String get commonHide => 'Hide the token';
 }

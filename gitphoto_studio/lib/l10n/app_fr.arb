@@ -41,7 +41,7 @@
   "phaseDocumentation": "Documentation",
   "agentIntro": "Décrivez ce que vous voulez faire ; l'agent propose un plan et attend votre validation avant d'agir.",
   "agentFeatures": "Fournisseur prioritaire : Mistral (autres fournisseurs configurables)\nOutils typés et validés, aucun accès shell libre\nPlan d'action présenté avant exécution\nConfirmation obligatoire\nAucun média envoyé à une IA sans votre accord",
-  "helpIntro": "Documentation intégrée, consultable hors ligne.",
+  "helpIntro": "Mode d'emploi complet, consultable hors ligne. Suivez le parcours guidé ou cherchez une question.",
   "helpFeatures": "Premiers pas et parcours guidé\nConnexion GitHub et création d'un dépôt\nPublication d'une photo ou d'une vidéo\nCommits, branches et Git LFS\nUtilisation de l'agent IA\nErreurs fréquentes, FAQ et glossaire",
   "dashActiveRepo": "Dépôt actif",
   "dashNoRepo": "Aucun dépôt connecté",
@@ -410,7 +410,7 @@
   "pubFolder": "Dossier dans le dépôt",
   "pubFolderHelp": "Ex. : photos/2024. Un dossier inexistant sera créé par l'ajout des fichiers. Laisser vide pour la racine.",
   "pubFolderInvalid": "Chemin invalide (pas de « .. », de « .git » ni de caractères spéciaux).",
-  "pubEmptyRepoNote": "Dépôt vide : les fichiers seront publiés un par un (un commit par fichier), sur la branche par défaut.",
+  "pubEmptyRepoNote": "Dépôt vide : un premier commit l'initialise avec un fichier, puis un second regroupe tous les autres, sur la branche par défaut.",
   "pubAnalyze": "Analyser",
   "pubAnalyzing": "Analyse : {done} sur {total}",
   "@pubAnalyzing": {
@@ -433,7 +433,7 @@
   "pubWarnGpsPublic": "Contient une position GPS et le dépôt est public",
   "pubOverwriteToggle": "Remplacer plutôt que renommer",
   "pubTruncatedTree": "Le dépôt est très volumineux : l'analyse des conflits est partielle. GitHub n'écrasera toutefois rien sans que ce soit prévu.",
-  "pubOptimizationNote": "Optimisation des images avant publication : disponible en phase 4.",
+  "pubOptimizationNote": "Astuce : optimisez d'abord vos images (Galerie › Optimiser) pour publier des copies plus légères et sans position GPS.",
   "pubSummaryCounts": "{upload} à envoyer ({size}), {skipped} ignoré(s), {blocked} bloqué(s)",
   "@pubSummaryCounts": {
     "placeholders": {
@@ -1132,5 +1132,68 @@
   "aiDeleteConversationsDone": "Conversations effacées.",
   "aiVerifiedReal": "Testé avec le vrai service",
   "aiNotVerifiedReal": "Non testé avec le vrai service (serveur simulé uniquement)",
-  "aiCapabilities": "Conversation et appels d'outils. Vision non utilisée : aucun média n'est envoyé."
+  "aiCapabilities": "Conversation et appels d'outils. Vision non utilisée : aucun média n'est envoyé.",
+  "helpSearchHint": "Rechercher dans le mode d'emploi (ex. : jeton, LFS, erreur 404)",
+  "helpNoResults": "Aucune rubrique ne correspond à cette recherche.",
+  "helpTopics": "Rubriques",
+  "helpContents": "Sommaire",
+  "helpNextTopic": "Rubrique suivante",
+  "helpUnknownTopic": "Rubrique introuvable.",
+  "helpContextual": "Aide sur cet écran",
+  "commonClear": "Effacer",
+  "tourTitle": "Parcours guidé",
+  "tourIntro": "Les étapes se cochent toutes seules dès que vous les avez réalisées.",
+  "tourProgress": "{done} sur {total}",
+  "@tourProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "tourDone": "Bravo : vous savez publier vos médias sur GitHub !",
+  "tourOptional": "facultatif",
+  "tourStepDone": "Étape faite",
+  "tourStepTodo": "Étape à faire",
+  "tourGo": "Y aller",
+  "tourRead": "Lire l'aide",
+  "tourImportTitle": "Importer une photo",
+  "tourImportBody": "Galerie › Importer. Vos fichiers d'origine ne sont jamais modifiés.",
+  "tourGithubTitle": "Se connecter à GitHub",
+  "tourGithubBody": "Avec un jeton limité à vos dépôts de photos, gardé dans le trousseau du système.",
+  "tourRepoTitle": "Choisir un dépôt actif",
+  "tourRepoBody": "Créez un dépôt (privé de préférence) ou choisissez-en un existant.",
+  "tourOptimizeTitle": "Alléger les photos",
+  "tourOptimizeBody": "Des copies plus légères et sans position GPS ; les originaux restent intacts.",
+  "tourPublishTitle": "Publier",
+  "tourPublishBody": "L'assistant montre exactement ce qui sera envoyé avant de publier.",
+  "tourHistoryTitle": "Consulter l'historique",
+  "tourHistoryBody": "Chaque publication y figure avec son commit et un lien vers GitHub.",
+  "tourAiTitle": "Essayer l'agent IA",
+  "tourAiBody": "Désactivé par défaut. Il propose des plans que vous confirmez.",
+  "diagLog": "Journal technique",
+  "diagLogHelp": "Événements récents de cette session (secrets masqués). Effacé à la fermeture.",
+  "diagLogEmpty": "Aucun événement pour l'instant.",
+  "diagLogCopy": "Copier le journal",
+  "diagReport": "Rapport de diagnostic",
+  "diagReportHelp": "Version, plateforme, outils et compteurs. Sans jeton, clé, nom de compte, nom de dépôt ni nom de fichier : vous pouvez le joindre à une demande d'aide.",
+  "diagReportCopy": "Copier le rapport",
+  "diagCopied": "Copié dans le presse-papiers.",
+  "settingsExport": "Exporter les paramètres",
+  "settingsExportHelp": "Préférences non sensibles au format JSON (thème, langue, publication, choix de l'IA). Aucun jeton ni aucune clé.",
+  "settingsExportCopy": "Copier",
+  "settingsExportSave": "Enregistrer dans un fichier…",
+  "settingsExportSaved": "Paramètres enregistrés : {path}",
+  "@settingsExportSaved": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "commonShow": "Afficher le jeton",
+  "commonHide": "Masquer le jeton"
 }

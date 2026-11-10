@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -301,14 +302,17 @@ void main() {
     await start(connected: false);
     final a = addMedia('a.jpg', 'AAA');
     final b = addMedia('b.jpg', 'BBB');
-    container
-        .read(publishQueueProvider.notifier)
-        .enqueue(
-          repo: ghRepo,
-          branch: 'main',
-          message: 'm',
-          plan: await planFor([a, b]),
-        );
+    // Volontairement non attendu : le compteur est lu pendant l'attente.
+    unawaited(
+      container
+          .read(publishQueueProvider.notifier)
+          .enqueue(
+            repo: ghRepo,
+            branch: 'main',
+            message: 'm',
+            plan: await planFor([a, b]),
+          ),
+    );
     expect(
       db.count('transfer_queue', where: "status IN ('pending', 'uploaded')"),
       2,

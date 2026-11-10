@@ -46,6 +46,12 @@ class FakeAgentEnvironment implements AgentEnvironment {
   final String? login;
   final bool videoSupported;
   Set<int> selected = {};
+  List<OperationRecord> ops = const [];
+  List<List<MediaItem>> similar = const [];
+  PublishPlan? previewPlan;
+
+  /// Réponse simulée d'une conversion vidéo (échec par défaut).
+  ImportItemResult Function(MediaItem video)? onConvert;
   final albumList = <Album>[];
   final actions = <String>[];
   int repoCalls = 0;
@@ -63,7 +69,7 @@ class FakeAgentEnvironment implements AgentEnvironment {
   Set<int> selection() => selected;
 
   @override
-  Future<List<List<MediaItem>>> similarGroups() async => const [];
+  Future<List<List<MediaItem>>> similarGroups() async => similar;
 
   @override
   String? githubLogin() => login;
@@ -82,7 +88,8 @@ class FakeAgentEnvironment implements AgentEnvironment {
       null;
 
   @override
-  List<OperationRecord> operations({int limit = 20}) => const [];
+  List<OperationRecord> operations({int limit = 20}) =>
+      ops.take(limit).toList();
 
   @override
   bool get videoConversionSupported => videoSupported;
@@ -96,6 +103,7 @@ class FakeAgentEnvironment implements AgentEnvironment {
     List<ExtraPublishFile> extraFiles = const [],
   }) async {
     actions.add('analyze ${repo.fullName}@$branch:$folder');
+    if (previewPlan case final plan?) return plan;
     return const PublishPlan(
       files: [],
       folder: '',
@@ -125,7 +133,8 @@ class FakeAgentEnvironment implements AgentEnvironment {
     bool Function()? isCancelled,
   }) async {
     actions.add('convert ${video.id}');
-    return ImportItemResult(video.fileName, ImportOutcome.failed);
+    return onConvert?.call(video) ??
+        ImportItemResult(video.fileName, ImportOutcome.failed);
   }
 
   @override

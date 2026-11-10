@@ -1,11 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Accès à l'API GitHub (et aux fournisseurs IA en phase 6). Flutter ne
-         l'ajoute automatiquement qu'aux versions de débogage. -->
+    <!-- Accès à l'API GitHub et aux fournisseurs IA. Flutter ne l'ajoute
+         automatiquement qu'aux versions de débogage. -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="GitPhoto Studio IA"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:dataExtractionRules="@xml/data_extraction_rules">
         <activity
             android:name=".MainActivity"
             android:exported="true"

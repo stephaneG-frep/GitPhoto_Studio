@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/help/domain/help_topics.dart';
 import '../l10n/generated/app_localizations.dart';
 import '../shared/widgets/pixel_mascot.dart';
 import 'destinations.dart';
@@ -35,13 +36,37 @@ class _AppShellState extends State<AppShell> {
 
     final drawer = _StudioNavigationDrawer(current: current, onSelected: _goTo);
 
+    // Aide contextuelle : ouvre la rubrique du mode d'emploi de l'écran.
+    final topic = contextualTopic(current);
+    final helpButton = topic == null
+        ? null
+        : IconButton(
+            icon: const Icon(Icons.help_outline),
+            tooltip: l10n.helpContextual,
+            onPressed: () => context.go('/help/${topic.id}'),
+          );
+
     if (isWide) {
       return Scaffold(
         key: _scaffoldKey,
         body: Row(
           children: [
             SizedBox(width: 280, child: drawer),
-            Expanded(child: widget.child),
+            Expanded(
+              child: Column(
+                children: [
+                  if (helpButton != null)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 8, 16, 0),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: helpButton,
+                      ),
+                    ),
+                  Expanded(child: widget.child),
+                ],
+              ),
+            ),
           ],
         ),
       );
@@ -57,6 +82,7 @@ class _AppShellState extends State<AppShell> {
           tooltip: l10n.navMenu,
           onPressed: () => _scaffoldKey.currentState?.openDrawer(),
         ),
+        actions: [?helpButton],
       ),
       drawer: drawer,
       body: widget.child,

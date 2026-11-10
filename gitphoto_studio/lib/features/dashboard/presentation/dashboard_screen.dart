@@ -50,14 +50,21 @@ class DashboardScreen extends ConsumerWidget {
                 children: [
                   Icon(Icons.hub_outlined, color: studio.accent),
                   const SizedBox(width: 8),
-                  Text(
-                    '${l10n.dashActiveRepo} : ',
-                    style: theme.textTheme.titleSmall,
-                  ),
-                  Flexible(
-                    child: Text(
-                      stats.activeRepository ?? l10n.dashNoRepo,
-                      overflow: TextOverflow.ellipsis,
+                  // Un seul texte qui passe à la ligne si les caractères
+                  // sont agrandis (accessibilité).
+                  Expanded(
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '${l10n.dashActiveRepo} : ',
+                            style: theme.textTheme.titleSmall,
+                          ),
+                          TextSpan(
+                            text: stats.activeRepository ?? l10n.dashNoRepo,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

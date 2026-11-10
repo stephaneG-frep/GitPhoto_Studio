@@ -10,6 +10,7 @@ import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/widgets/pixel_mascot.dart';
 import '../../../shared/widgets/screen_frame.dart';
 import '../../ai_agent/presentation/ai_settings_section.dart';
+import 'diagnostic_tools.dart';
 import '../../github/application/github_session.dart';
 import '../../publishing/application/publish_controller.dart'
     show PublishPreferenceKeys;
@@ -87,6 +88,8 @@ class SettingsScreen extends ConsumerWidget {
         const AiSettingsSection(),
         SectionTitle(l10n.settingsDiagnostics),
         const _DiagnosticsCard(),
+        const SizedBox(height: 8),
+        const DiagnosticTools(),
         const SizedBox(height: 16),
         PixelTip(message: l10n.pixelSettingsHint),
         SectionTitle(l10n.settingsAbout),

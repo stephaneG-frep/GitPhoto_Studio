@@ -208,7 +208,11 @@ class AgentToolbox {
 
   static const maxResultChars = 12000;
 
+  /// Part d'un résultat de recherche réservée à la liste des médias.
+  static const itemsBudgetChars = 10000;
+
   Future<String> run(String name, Map<String, Object?> args) async {
+    _albumNames = null;
     Object? result;
     try {
       result = switch (name) {
@@ -247,8 +251,14 @@ class AgentToolbox {
   static String _date(DateTime? d) =>
       d == null ? '' : d.toIso8601String().substring(0, 10);
 
+  /// Noms des albums, lus une seule fois par appel d'outil.
+  Map<int, String>? _albumNames;
+
+  Map<int, String> get _albumNameMap =>
+      _albumNames ??= {for (final a in env.albums()) a.id: a.name};
+
   Map<String, Object?> mediaRow(MediaItem m) {
-    final albums = {for (final a in env.albums()) a.id: a.name};
+    final albums = _albumNameMap;
     return {
       'id': m.id,
       'name': m.fileName,
@@ -312,10 +322,26 @@ class AgentToolbox {
       }
       return true;
     }).toList();
+    // Liste raccourcie par éléments entiers pour rester sous la taille
+    // maximale d'un résultat (jamais de JSON coupé au milieu).
+    final items = <Map<String, Object?>>[];
+    var size = 0;
+    for (final m in matches.skip(offset).take(limit)) {
+      final row = mediaRow(m);
+      size += jsonEncode(row).length + 1;
+      if (size > itemsBudgetChars) break;
+      items.add(row);
+    }
+    final page = matches.skip(offset).take(limit).length;
     return {
       'total': matches.length,
       'offset': offset,
-      'items': [for (final m in matches.skip(offset).take(limit)) mediaRow(m)],
+      'returned': items.length,
+      if (items.length < page)
+        'note':
+            'Liste raccourcie : relancez avec offset=${offset + items.length} '
+            'pour la suite, ou affinez les filtres.',
+      'items': items,
     };
   }
 

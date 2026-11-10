@@ -1,0 +1,33 @@
+# Glossaire
+
+- **Agent IA** : assistant facultatif qui comprend une demande écrite et propose un plan à confirmer.
+- **Album** : regroupement de médias dans la bibliothèque de l'application (n'existe pas sur GitHub).
+- **API** : porte d'entrée par laquelle un programme parle à un service (ici GitHub ou un fournisseur d'IA).
+- **Branche** : ligne de versions d'un dépôt ; la principale s'appelle souvent `main`.
+- **Clé d'API** : identifiant secret qui autorise l'application à utiliser un service d'IA.
+- **Commit** : enregistrement d'un ensemble de changements dans un dépôt, avec un message, un auteur et une date.
+- **Conflit** : situation où le dépôt a changé entre l'analyse et la publication ; l'application s'arrête plutôt que d'écraser.
+- **Dépôt (repository)** : dossier en ligne sur GitHub qui conserve les fichiers et tout leur historique.
+- **Dépôt actif** : le dépôt proposé par défaut pour publier.
+- **Device Flow** : connexion à GitHub en recopiant un code dans le navigateur.
+- **EXIF** : informations enregistrées dans une photo (date, appareil, position GPS…).
+- **Empreinte (SHA)** : code calculé à partir du contenu d'un fichier ; deux fichiers identiques ont la même.
+- **File d'attente** : liste des publications confirmées, exécutées une par une.
+- **Fine-grained (jeton)** : jeton GitHub limité à des dépôts et des permissions précis.
+- **Fournisseur IA** : service qui fait fonctionner le modèle d'IA (Mistral, OpenAI, Anthropic, Gemini, Ollama).
+- **Git** : logiciel qui gère les versions des fichiers ; GitHub l'héberge en ligne.
+- **GitHub** : site qui héberge des dépôts Git.
+- **Git LFS** : extension de Git pour les gros fichiers, stockés à part.
+- **`.gitattributes`** : fichier du dépôt qui indique, entre autres, quels fichiers passent par Git LFS.
+- **Jeton (token)** : mot de passe limité et révocable qui autorise l'application à agir sur vos dépôts.
+- **Message de commit** : phrase qui décrit une publication.
+- **Métadonnées** : informations sur un fichier (nom, taille, date, appareil, position…).
+- **Modèle** : le programme d'IA lui-même (par exemple `mistral-small-latest`).
+- **Ollama** : logiciel pour faire tourner un modèle d'IA sur son propre ordinateur.
+- **Plan** : liste d'étapes proposée par l'agent, exécutée seulement après votre confirmation.
+- **Pointeur LFS** : petit fichier texte placé dans le dépôt à la place d'un gros fichier.
+- **Privé / public** : visibilité d'un dépôt (vous et vos invités / tout le monde).
+- **Push** : envoi de commits vers GitHub.
+- **README** : fichier de présentation affiché sur la page d'accueil d'un dépôt.
+- **Trousseau** : coffre-fort du système pour les mots de passe (Keystore, GNOME Keyring, KWallet).
+- **Version** : copie d'un média créée par l'application (optimisée, convertie) ; l'original reste intact.

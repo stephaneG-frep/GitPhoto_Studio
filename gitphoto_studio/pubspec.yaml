@@ -40,3 +40,5 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/help/
+    - assets/help/fr/
+    - assets/help/en/

@@ -245,7 +245,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpIntro.
   ///
   /// In fr, this message translates to:
-  /// **'Documentation intégrée, consultable hors ligne.'**
+  /// **'Mode d\'emploi complet, consultable hors ligne. Suivez le parcours guidé ou cherchez une question.'**
   String get helpIntro;
 
   /// No description provided for @helpFeatures.
@@ -1384,7 +1384,7 @@ abstract class AppLocalizations {
   /// No description provided for @pubEmptyRepoNote.
   ///
   /// In fr, this message translates to:
-  /// **'Dépôt vide : les fichiers seront publiés un par un (un commit par fichier), sur la branche par défaut.'**
+  /// **'Dépôt vide : un premier commit l\'initialise avec un fichier, puis un second regroupe tous les autres, sur la branche par défaut.'**
   String get pubEmptyRepoNote;
 
   /// No description provided for @pubAnalyze.
@@ -1462,7 +1462,7 @@ abstract class AppLocalizations {
   /// No description provided for @pubOptimizationNote.
   ///
   /// In fr, this message translates to:
-  /// **'Optimisation des images avant publication : disponible en phase 4.'**
+  /// **'Astuce : optimisez d\'abord vos images (Galerie › Optimiser) pour publier des copies plus légères et sans position GPS.'**
   String get pubOptimizationNote;
 
   /// No description provided for @pubSummaryCounts.
@@ -2988,6 +2988,282 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Conversation et appels d\'outils. Vision non utilisée : aucun média n\'est envoyé.'**
   String get aiCapabilities;
+
+  /// No description provided for @helpSearchHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher dans le mode d\'emploi (ex. : jeton, LFS, erreur 404)'**
+  String get helpSearchHint;
+
+  /// No description provided for @helpNoResults.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune rubrique ne correspond à cette recherche.'**
+  String get helpNoResults;
+
+  /// No description provided for @helpTopics.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rubriques'**
+  String get helpTopics;
+
+  /// No description provided for @helpContents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sommaire'**
+  String get helpContents;
+
+  /// No description provided for @helpNextTopic.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rubrique suivante'**
+  String get helpNextTopic;
+
+  /// No description provided for @helpUnknownTopic.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rubrique introuvable.'**
+  String get helpUnknownTopic;
+
+  /// No description provided for @helpContextual.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aide sur cet écran'**
+  String get helpContextual;
+
+  /// No description provided for @commonClear.
+  ///
+  /// In fr, this message translates to:
+  /// **'Effacer'**
+  String get commonClear;
+
+  /// No description provided for @tourTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Parcours guidé'**
+  String get tourTitle;
+
+  /// No description provided for @tourIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les étapes se cochent toutes seules dès que vous les avez réalisées.'**
+  String get tourIntro;
+
+  /// No description provided for @tourProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'{done} sur {total}'**
+  String tourProgress(int done, int total);
+
+  /// No description provided for @tourDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bravo : vous savez publier vos médias sur GitHub !'**
+  String get tourDone;
+
+  /// No description provided for @tourOptional.
+  ///
+  /// In fr, this message translates to:
+  /// **'facultatif'**
+  String get tourOptional;
+
+  /// No description provided for @tourStepDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Étape faite'**
+  String get tourStepDone;
+
+  /// No description provided for @tourStepTodo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Étape à faire'**
+  String get tourStepTodo;
+
+  /// No description provided for @tourGo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Y aller'**
+  String get tourGo;
+
+  /// No description provided for @tourRead.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lire l\'aide'**
+  String get tourRead;
+
+  /// No description provided for @tourImportTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Importer une photo'**
+  String get tourImportTitle;
+
+  /// No description provided for @tourImportBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Galerie › Importer. Vos fichiers d\'origine ne sont jamais modifiés.'**
+  String get tourImportBody;
+
+  /// No description provided for @tourGithubTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Se connecter à GitHub'**
+  String get tourGithubTitle;
+
+  /// No description provided for @tourGithubBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Avec un jeton limité à vos dépôts de photos, gardé dans le trousseau du système.'**
+  String get tourGithubBody;
+
+  /// No description provided for @tourRepoTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir un dépôt actif'**
+  String get tourRepoTitle;
+
+  /// No description provided for @tourRepoBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créez un dépôt (privé de préférence) ou choisissez-en un existant.'**
+  String get tourRepoBody;
+
+  /// No description provided for @tourOptimizeTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alléger les photos'**
+  String get tourOptimizeTitle;
+
+  /// No description provided for @tourOptimizeBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Des copies plus légères et sans position GPS ; les originaux restent intacts.'**
+  String get tourOptimizeBody;
+
+  /// No description provided for @tourPublishTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier'**
+  String get tourPublishTitle;
+
+  /// No description provided for @tourPublishBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'assistant montre exactement ce qui sera envoyé avant de publier.'**
+  String get tourPublishBody;
+
+  /// No description provided for @tourHistoryTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Consulter l\'historique'**
+  String get tourHistoryTitle;
+
+  /// No description provided for @tourHistoryBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque publication y figure avec son commit et un lien vers GitHub.'**
+  String get tourHistoryBody;
+
+  /// No description provided for @tourAiTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Essayer l\'agent IA'**
+  String get tourAiTitle;
+
+  /// No description provided for @tourAiBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactivé par défaut. Il propose des plans que vous confirmez.'**
+  String get tourAiBody;
+
+  /// No description provided for @diagLog.
+  ///
+  /// In fr, this message translates to:
+  /// **'Journal technique'**
+  String get diagLog;
+
+  /// No description provided for @diagLogHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événements récents de cette session (secrets masqués). Effacé à la fermeture.'**
+  String get diagLogHelp;
+
+  /// No description provided for @diagLogEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun événement pour l\'instant.'**
+  String get diagLogEmpty;
+
+  /// No description provided for @diagLogCopy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Copier le journal'**
+  String get diagLogCopy;
+
+  /// No description provided for @diagReport.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rapport de diagnostic'**
+  String get diagReport;
+
+  /// No description provided for @diagReportHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Version, plateforme, outils et compteurs. Sans jeton, clé, nom de compte, nom de dépôt ni nom de fichier : vous pouvez le joindre à une demande d\'aide.'**
+  String get diagReportHelp;
+
+  /// No description provided for @diagReportCopy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Copier le rapport'**
+  String get diagReportCopy;
+
+  /// No description provided for @diagCopied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Copié dans le presse-papiers.'**
+  String get diagCopied;
+
+  /// No description provided for @settingsExport.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exporter les paramètres'**
+  String get settingsExport;
+
+  /// No description provided for @settingsExportHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Préférences non sensibles au format JSON (thème, langue, publication, choix de l\'IA). Aucun jeton ni aucune clé.'**
+  String get settingsExportHelp;
+
+  /// No description provided for @settingsExportCopy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Copier'**
+  String get settingsExportCopy;
+
+  /// No description provided for @settingsExportSave.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer dans un fichier…'**
+  String get settingsExportSave;
+
+  /// No description provided for @settingsExportSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paramètres enregistrés : {path}'**
+  String settingsExportSaved(String path);
+
+  /// No description provided for @commonShow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Afficher le jeton'**
+  String get commonShow;
+
+  /// No description provided for @commonHide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masquer le jeton'**
+  String get commonHide;
 }
 
 class _AppLocalizationsDelegate
