@@ -250,7 +250,9 @@ void main() {
       expect(errors, isEmpty, reason: '${errors.map((e) => e.error)}');
       for (final e in entries.whereType<AssistantEntry>()) {
         // ignore: avoid_print
-        print('Agent : ${e.text.replaceAll('\n', ' ⏎ ')} (outils : ${e.toolsUsed})');
+        print(
+          'Agent : ${e.text.replaceAll('\n', ' ⏎ ')} (outils : ${e.toolsUsed})',
+        );
       }
       final planEntry = entries.whereType<PlanEntry>().single;
       final publish = planEntry.plan.actions.whereType<PublishAction>().single;

@@ -94,12 +94,29 @@ class SettingsScreen extends ConsumerWidget {
         PixelTip(message: l10n.pixelSettingsHint),
         SectionTitle(l10n.settingsAbout),
         Card(
-          child: ListTile(
-            leading: const PixelMascot(size: 40),
-            title: Text(l10n.appTitle),
-            subtitle: Text(
-              l10n.settingsVersion('${AppInfo.version}+${AppInfo.buildNumber}'),
-            ),
+          child: Column(
+            children: [
+              ListTile(
+                leading: const PixelMascot(size: 40),
+                title: Text(l10n.appTitle),
+                subtitle: Text(
+                  '${l10n.settingsVersion('${AppInfo.version}+${AppInfo.buildNumber}')}\n'
+                  '${l10n.settingsCopyright}',
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.description_outlined),
+                title: Text(l10n.settingsLicenses),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => showLicensePage(
+                  context: context,
+                  applicationName: l10n.appTitle,
+                  applicationVersion:
+                      '${AppInfo.version}+${AppInfo.buildNumber}',
+                  applicationLegalese: l10n.settingsCopyright,
+                ),
+              ),
+            ],
           ),
         ),
       ],

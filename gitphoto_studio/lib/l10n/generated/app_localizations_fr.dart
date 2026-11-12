@@ -2014,4 +2014,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commonHide => 'Masquer le jeton';
+
+  @override
+  String get settingsCopyright =>
+      '© 2026 stephaneG-frep — Tous droits réservés';
+
+  @override
+  String get settingsLicenses => 'Licences des composants';
 }

@@ -31,8 +31,10 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            // Choix du propriétaire (phase 9) : application personnelle,
+            // signée avec la clé de développement. Pour une diffusion
+            // publique, créer une clé de livraison (voir
+            // docs/GUIDE_INSTALLATION.md, « Signature »).
             signingConfig = signingConfigs.getByName("debug")
         }
     }
@@ -54,4 +56,14 @@ dependencies {
     implementation("androidx.media3:media3-transformer:1.9.2")
     implementation("androidx.media3:media3-effect:1.9.2")
     implementation("androidx.media3:media3-common:1.9.2")
+}
+
+// Livraison ARM64 uniquement : une dépendance (jni) embarque sa bibliothèque
+// précompilée pour d'autres architectures, retirée de la version release.
+androidComponents {
+    onVariants(selector().withBuildType("release")) { variant ->
+        variant.packaging.jniLibs.excludes.addAll(
+            listOf("lib/armeabi-v7a/**", "lib/x86_64/**", "lib/x86/**"),
+        )
+    }
 }

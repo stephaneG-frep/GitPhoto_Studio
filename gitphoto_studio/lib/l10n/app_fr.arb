@@ -1195,5 +1195,7 @@
     }
   },
   "commonShow": "Afficher le jeton",
-  "commonHide": "Masquer le jeton"
+  "commonHide": "Masquer le jeton",
+  "settingsCopyright": "© 2026 stephaneG-frep — Tous droits réservés",
+  "settingsLicenses": "Licences des composants"
 }

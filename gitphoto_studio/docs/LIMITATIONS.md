@@ -1,5 +1,12 @@
 # Limitations connues
 
+## Version 1.0.0 (livraison)
+
+- APK signé avec la clé de développement (choix du propriétaire,
+  application personnelle) : ne pas diffuser publiquement sous cette forme.
+- Testé sur un seul téléphone Android et une seule distribution Linux
+  (Ubuntu 22.04).
+
 ## Après la phase 8
 
 - Le modèle d'IA peut encore, rarement, répondre en texte au lieu de

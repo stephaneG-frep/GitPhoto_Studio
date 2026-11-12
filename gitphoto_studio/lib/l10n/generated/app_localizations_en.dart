@@ -2006,4 +2006,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonHide => 'Hide the token';
+
+  @override
+  String get settingsCopyright => '© 2026 stephaneG-frep — All rights reserved';
+
+  @override
+  String get settingsLicenses => 'Component licenses';
 }

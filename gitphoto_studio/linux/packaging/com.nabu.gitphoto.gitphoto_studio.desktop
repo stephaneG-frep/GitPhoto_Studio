@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=GitPhoto Studio IA
+GenericName=Atelier photo et GitHub
+GenericName[en]=Photo studio and GitHub
+Comment=Organiser, optimiser et publier ses photos et vidéos sur GitHub
+Comment[en]=Organize, optimize and publish photos and videos to GitHub
+Exec=gitphoto-studio
+Icon=gitphoto-studio
+Terminal=false
+Categories=Graphics;Photography;
+Keywords=photo;vidéo;video;GitHub;Git;LFS;IA;AI;
+StartupWMClass=com.nabu.gitphoto.gitphoto_studio
+StartupNotify=true

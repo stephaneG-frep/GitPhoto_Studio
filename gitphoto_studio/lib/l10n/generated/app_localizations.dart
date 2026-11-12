@@ -3264,6 +3264,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Masquer le jeton'**
   String get commonHide;
+
+  /// No description provided for @settingsCopyright.
+  ///
+  /// In fr, this message translates to:
+  /// **'© 2026 stephaneG-frep — Tous droits réservés'**
+  String get settingsCopyright;
+
+  /// No description provided for @settingsLicenses.
+  ///
+  /// In fr, this message translates to:
+  /// **'Licences des composants'**
+  String get settingsLicenses;
 }
 
 class _AppLocalizationsDelegate

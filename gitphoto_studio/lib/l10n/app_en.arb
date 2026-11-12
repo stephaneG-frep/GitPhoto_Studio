@@ -526,5 +526,7 @@
   "settingsExportSave": "Save to a file…",
   "settingsExportSaved": "Settings saved: {path}",
   "commonShow": "Show the token",
-  "commonHide": "Hide the token"
+  "commonHide": "Hide the token",
+  "settingsCopyright": "© 2026 stephaneG-frep — All rights reserved",
+  "settingsLicenses": "Component licenses"
 }

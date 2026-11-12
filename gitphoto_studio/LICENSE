@@ -1,0 +1,24 @@
+GitPhoto Studio IA — L'atelier des médias connectés
+Copyright © 2026 stephaneG-frep. Tous droits réservés.
+
+Ce logiciel et son code source sont la propriété exclusive de leur auteur.
+Le code est consultable publiquement, mais aucune licence n'est accordée :
+toute reproduction, modification, distribution, publication, sous-licence ou
+utilisation commerciale, en tout ou partie, est interdite sans l'autorisation
+écrite préalable du titulaire des droits.
+
+LE LOGICIEL EST FOURNI « EN L'ÉTAT », SANS GARANTIE D'AUCUNE SORTE, EXPRESSE
+OU IMPLICITE. EN AUCUN CAS L'AUTEUR NE POURRA ÊTRE TENU RESPONSABLE DE TOUT
+DOMMAGE DÉCOULANT DE SON UTILISATION.
+
+Composants tiers : l'application utilise des bibliothèques libres (Flutter,
+Dart et les paquets listés dans pubspec.yaml), chacune soumise à sa propre
+licence. Ces licences restent applicables à ces composants et sont
+consultables dans l'application : Paramètres › À propos › Licences des
+composants.
+
+---
+
+All rights reserved. No license is granted to use, copy, modify or
+distribute this software without the prior written permission of the
+copyright holder. Third-party components remain under their own licenses.

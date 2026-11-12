@@ -46,3 +46,9 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Rendus intermédiaires de l’icône (régénérables).
+/tool/icon/out/
+
+# Livrables (APK, .deb, ZIP) : publiés à part, jamais versionnés.
+/dist/

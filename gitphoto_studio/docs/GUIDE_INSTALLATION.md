@@ -1,21 +1,35 @@
 # Guide d'installation — GitPhoto Studio IA
 
-> État : phase 7. Les paquets définitifs (APK signé de livraison, paquet
-> `.deb`, archive ZIP) seront produits et vérifiés en **phase 9**. Ce guide
-> décrit l'installation telle qu'elle est testée aujourd'hui.
+Version **1.0.0**. Livrables (dossier `dist/`, publiés à part du code) :
+
+| Fichier | Contenu |
+|---|---|
+| `gitphoto-studio-1.0.0-arm64.apk` | Android ARM64 |
+| `gitphoto-studio_1.0.0_amd64.deb` | Linux x86-64 (Debian, Ubuntu…) |
+| `gitphoto-studio-1.0.0-source.zip` | code source |
+| `SHA256SUMS` | empreintes pour vérifier les fichiers |
+
+Vérifier l'intégrité d'un fichier téléchargé :
+
+```
+sha256sum -c SHA256SUMS --ignore-missing
+```
 
 ## Android (ARM64)
 
 **Configuration requise** : Android 7.0 (API 24) ou plus récent, processeur
 ARM 64 bits. Testé sur un téléphone MTN NX1M.
 
-**Permission demandée** : accès à Internet uniquement (GitHub et, si vous
-l'activez, le fournisseur d'IA). Les photos et vidéos sont choisies par le
-sélecteur du système : l'application n'a pas d'accès général à vos fichiers.
+**Permissions** : accès à Internet (GitHub et, si vous l'activez, le
+fournisseur d'IA). Le lecteur vidéo intégré (Media3) ajoute deux permissions
+techniques accordées automatiquement, sans demande : état du réseau et
+maintien de l'écran allumé pendant la lecture. Aucun accès général à vos
+fichiers : les photos et vidéos sont choisies par le sélecteur du système.
+La sauvegarde automatique Android est désactivée.
 
 ### Installer
 
-1. Copiez `app-release.apk` sur le téléphone.
+1. Copiez `gitphoto-studio-1.0.0-arm64.apk` sur le téléphone.
 2. Ouvrez-le depuis le gestionnaire de fichiers. Android demande d'autoriser
    l'installation depuis cette source : acceptez pour cette fois.
 3. Lancez **GitPhoto Studio IA**.
@@ -23,7 +37,7 @@ sélecteur du système : l'application n'a pas d'accès général à vos fichier
 Depuis un ordinateur, avec le débogage USB activé :
 
 ```
-adb install -r app-release.apk
+adb install -r gitphoto-studio-1.0.0-arm64.apk
 ```
 
 L'option `-r` met à jour l'application en **conservant ses données**
@@ -35,8 +49,25 @@ Paramètres Android › Applications › GitPhoto Studio IA › Désinstaller. L
 copies de travail, la base locale, le jeton GitHub et les clés d'IA de
 l'application sont effacés. Vos photos d'origine ne sont pas touchées.
 
-> La signature actuelle est une signature de développement. La signature de
-> livraison et sa procédure seront documentées en phase 9.
+### Signature
+
+Choix du propriétaire : application **personnelle**, signée avec la **clé
+de développement** d'Android (certificat « Android Debug »). Les mises à
+jour s'installent par-dessus sans perte de données, depuis la même machine
+de compilation.
+
+Pour une diffusion publique, il faudrait une clé de livraison, **à garder
+précieusement hors du dépôt** (la perdre empêche toute mise à jour) :
+
+```
+keytool -genkey -v -keystore ~/.config/gitphoto/gitphoto-release.jks \
+  -keyalg RSA -keysize 4096 -validity 10000 -alias gitphoto
+```
+
+puis un fichier `android/key.properties` (ignoré par Git) et une
+configuration `signingConfigs.release` dans `android/app/build.gradle.kts`.
+Changer de clé impose de désinstaller la version signée avec l'ancienne
+(les données de l'application sont alors effacées).
 
 ## Linux (x86-64)
 
@@ -58,20 +89,33 @@ sudo apt install libgtk-3-0 libsecret-1-0 gnome-keyring ffmpeg git
 Git LFS n'a pas besoin d'être installé : l'application parle directement au
 service LFS de GitHub.
 
-### Lancer la version compilée
-
-Le dossier `build/linux/x64/release/bundle/` contient l'application complète
-(exécutable, bibliothèques, ressources). Copiez ce dossier où vous voulez,
-puis :
+### Installer le paquet .deb
 
 ```
-./gitphoto_studio
+sudo apt install ./gitphoto-studio_1.0.0_amd64.deb
 ```
 
-Données de l'application : `~/.local/share/com.nabu.gitphoto.gitphoto_studio/`
-(base locale, copies de travail, miniatures). Pour tout effacer, supprimez ce
-dossier après avoir quitté l'application, et retirez le jeton du trousseau
-(écran GitHub › Se déconnecter, avant suppression).
+`apt` installe aussi les dépendances manquantes. L'application apparaît dans
+le menu (« GitPhoto Studio IA ») et se lance aussi par la commande
+`gitphoto-studio`. Fichiers installés : `/opt/gitphoto-studio/`
+(application), `/usr/bin/gitphoto-studio`, le raccourci du menu, l'icône et
+la documentation dans `/usr/share/doc/gitphoto-studio/`.
+
+### Désinstaller
+
+```
+sudo apt remove gitphoto-studio
+```
+
+Les données personnelles ne sont pas supprimées par la désinstallation :
+`~/.local/share/com.nabu.gitphoto.gitphoto_studio/` (base locale, copies de
+travail, miniatures). Pour tout effacer : se déconnecter de GitHub dans
+l'application (le jeton est retiré du trousseau), puis supprimer ce dossier.
+
+### Sans installation
+
+Le dossier `build/linux/x64/release/bundle/` (après compilation) contient
+l'application complète : `./gitphoto_studio`.
 
 ## Compiler depuis les sources
 
@@ -84,7 +128,12 @@ flutter pub get
 flutter test
 flutter build linux --release
 flutter build apk --release --target-platform android-arm64
+bash scripts/build_deb.sh          # → dist/gitphoto-studio_<version>_amd64.deb
+bash scripts/build_source_zip.sh   # → dist/gitphoto-studio-<version>-source.zip
 ```
+
+Icône : `flutter test tool/icon/render_icon_test.dart` puis
+`python3 tool/icon/resize_icons.py` (rendue à partir de la mascotte Pixel).
 
 ## Premiers pas après l'installation
 

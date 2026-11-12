@@ -4,8 +4,9 @@ Application Flutter (Android ARM64, Linux `.deb`) pour organiser, optimiser et
 publier photos et vidéos dans des dépôts GitHub sans manipuler Git, avec un
 mode classique et un agent IA (Mistral en priorité) à exécution contrôlée.
 
-Cahier des charges : [SPEC.md](SPEC.md). État d'avancement : **phase 8 —
-qualité** (voir [docs/RAPPORT_PHASE8.md](docs/RAPPORT_PHASE8.md) et
+Cahier des charges : [SPEC.md](SPEC.md). État d'avancement : **version 1.0.0 livrée** (voir
+[docs/RAPPORT_VALIDATION.md](docs/RAPPORT_VALIDATION.md),
+[docs/RAPPORT_TESTS.md](docs/RAPPORT_TESTS.md) et
 [docs/LIMITATIONS.md](docs/LIMITATIONS.md)).
 
 ## Documentation
@@ -15,6 +16,10 @@ qualité** (voir [docs/RAPPORT_PHASE8.md](docs/RAPPORT_PHASE8.md) et
 - [Guide d'installation](docs/GUIDE_INSTALLATION.md),
   [configuration GitHub](docs/GUIDE_GITHUB.md),
   [fournisseurs IA](docs/GUIDE_IA.md)
+- [Rapport de tests](docs/RAPPORT_TESTS.md),
+  [rapport de validation](docs/RAPPORT_VALIDATION.md),
+  [limitations](docs/LIMITATIONS.md), [licence](LICENSE) (tous droits
+  réservés)
 - Les guides sont générés depuis `assets/help/fr/` :
   `python3 scripts/generate_guides.py`
 
@@ -40,6 +45,8 @@ flutter test integration_test/full_journey_real_test.dart -d linux \
 flutter run -d linux
 flutter build linux --release
 flutter build apk --release --target-platform android-arm64
+bash scripts/build_deb.sh          # paquet .deb dans dist/
+bash scripts/build_source_zip.sh   # archive du code source dans dist/
 ```
 
 ## Architecture
